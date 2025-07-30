@@ -148,7 +148,7 @@ function HeroGeometric({
                 />
             </div>
 
-            {/* Vance Headshot - Desktop: Right side, Mobile: In content flow */}
+            {/* Vance Headshot - Desktop: Large dramatic presence, Mobile: In content flow */}
             <motion.div
                 initial={{ opacity: 0, x: 50, scale: 0.8 }}
                 animate={{ opacity: 1, x: 0, scale: 1 }}
@@ -157,14 +157,17 @@ function HeroGeometric({
                     delay: 0.8,
                     ease: [0.23, 0.86, 0.39, 0.96],
                 }}
-                className="hidden md:block absolute right-[5%] top-1/2 transform -translate-y-1/2 z-5"
+                className="hidden md:block absolute right-[-15%] top-[25%] transform -translate-y-1/2 z-20"
             >
-                <div className="w-80 h-96">
+                <div className="relative">
                     <img 
                         src={vanceHeadshot} 
                         alt="Vance Dotson - Credit Repair Expert" 
-                        className="w-full h-full object-cover object-center"
+                        className="h-[85vh] w-auto object-contain"
                     />
+                    {/* Gradient fade overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-[#030303]/60 to-transparent pointer-events-none" 
+                         style={{ maskImage: 'linear-gradient(to top, black 0%, black 75%, transparent 100%)' }} />
                 </div>
             </motion.div>
 
@@ -175,10 +178,10 @@ function HeroGeometric({
                         variants={fadeUpVariants}
                         initial="hidden"
                         animate="visible"
-                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] mb-8 md:mb-12"
+                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.08] border border-white/[0.20] mb-4 md:mb-6"
                     >
                         <Circle className="h-2 w-2 fill-green-500/80" />
-                        <span className="text-sm text-white/60 tracking-wide">
+                        <span className="text-sm text-white/80 tracking-wide">
                             {badge}
                         </span>
                     </motion.div>
@@ -210,7 +213,7 @@ function HeroGeometric({
                         initial="hidden"
                         animate="visible"
                     >
-                        <p className="text-base sm:text-lg md:text-xl text-white/60 mb-8 leading-relaxed font-light tracking-wide max-w-2xl mx-auto px-4">
+                        <p className="text-base sm:text-lg md:text-xl text-white/80 mb-8 leading-relaxed font-light tracking-wide max-w-2xl mx-auto px-4">
                             {description}
                         </p>
                     </motion.div>

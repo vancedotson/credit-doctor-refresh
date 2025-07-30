@@ -7,7 +7,8 @@ import {
   Send, 
   TrendingUp,
   ArrowRight,
-  CheckCircle
+  CheckCircle,
+  Phone
 } from "lucide-react";
 import creditImage from "@/assets/credit-improvement.jpg";
 
@@ -79,7 +80,7 @@ const Process = () => {
               <h2 className="text-4xl lg:text-5xl font-bold mb-6">
                 How We Fix Your Credit
               </h2>
-              <p className="text-xl text-muted-foreground">
+              <p className="text-xl text-slate-300">
                 Our proven 4-step process has helped thousands of clients 
                 achieve their credit goals faster than they thought possible.
               </p>
@@ -110,7 +111,7 @@ const Process = () => {
                               {step.duration}
                             </span>
                           </div>
-                          <p className="text-muted-foreground mb-4">{step.description}</p>
+                          <p className="text-slate-400 mb-4">{step.description}</p>
                           <div className="flex items-center gap-2 text-success">
                             <CheckCircle className="w-4 h-4" />
                             <span className="text-sm font-medium">Guaranteed Results</span>
@@ -127,7 +128,7 @@ const Process = () => {
                         animate={{ y: [0, 5, 0] }}
                         transition={{ repeat: Infinity, duration: 2, delay: index * 0.2 }}
                       >
-                        <ArrowRight className="w-6 h-6 text-muted-foreground rotate-90" />
+                        <ArrowRight className="w-6 h-6 text-slate-400 rotate-90" />
                       </motion.div>
                     </div>
                   )}
@@ -142,10 +143,21 @@ const Process = () => {
               viewport={{ once: true }}
               className="mt-12"
             >
-              <Button size="lg" className="text-lg px-8 py-6 gradient-success w-full sm:w-auto">
-                Start Your Credit Repair Journey
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" className="text-lg px-8 py-6 gradient-success">
+                  Start Your Credit Repair Journey
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="text-lg px-8 py-6"
+                  onClick={() => window.location.href = 'tel:4054067323'}
+                >
+                  <Phone className="w-5 h-5 mr-2" />
+                  Call (405) 406-7323
+                </Button>
+              </div>
             </motion.div>
           </motion.div>
         </div>

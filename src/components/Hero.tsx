@@ -9,8 +9,13 @@ import { HeroGeometric } from "@/components/ui/shape-landing-hero";
 import { motion } from "framer-motion";
 import vanceHeadshot from "@/assets/VANCE DOTSON BG (2) (1).png";
 
-const Hero = () => {
-  const [showForm, setShowForm] = useState(false);
+interface HeroProps {
+  showForm: boolean;
+  openForm: () => void;
+  closeForm: () => void;
+}
+
+const Hero = ({ showForm, openForm, closeForm }: HeroProps) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -50,24 +55,15 @@ const Hero = () => {
     }
   };
 
-  const openForm = () => {
-    setShowForm(true);
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeForm = () => {
-    setShowForm(false);
-    document.body.style.overflow = 'unset';
-  };
-
   return (
     <>
-      <HeroGeometric
-        badge="🏆 5-Star Credit Repair Service"
-        title1="Fix Your Credit Score"
-        title2="Fast & Guaranteed"
-        description="Expert credit repair services that get results. Improve your credit score in 30-60 days with our proven 4-step process and 98% success rate."
-      >
+      <section id="hero">
+        <HeroGeometric
+          badge="🏆 5-Star Credit Repair Service"
+          title1="Fix Your Credit Score"
+          title2="Fast & Guaranteed"
+          description="Expert credit repair services that get results. Improve your credit score in 30-60 days with our proven 4-step process and 98% success rate."
+        >
         <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center items-center">
           <Button 
             size="lg" 
@@ -80,13 +76,14 @@ const Hero = () => {
             size="lg" 
             variant="outline" 
             className="text-lg px-8 py-6 border-white/50 text-white bg-transparent hover:bg-white hover:text-black"
+            onClick={() => window.location.href = 'tel:4054067323'}
           >
             <Phone className="w-5 h-5 mr-2" />
             (405) 406-7323
           </Button>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-white/70 text-sm">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-white/85 text-sm">
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-green-400" />
             <span>100% Money Back Guarantee</span>
@@ -119,7 +116,7 @@ const Hero = () => {
               className="w-full h-full object-cover object-center"
             />
           </div>
-          <p className="text-center text-white/60 text-sm mt-3">
+          <p className="text-center text-white/80 text-sm mt-3">
             Vance Dotson - Your Credit Expert
           </p>
         </motion.div>
@@ -127,18 +124,19 @@ const Hero = () => {
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
           <div className="text-center">
             <div className="text-3xl sm:text-4xl font-bold text-green-400 mb-2">150+</div>
-            <div className="text-white/60 text-sm">Avg Points Increased</div>
+            <div className="text-white/80 text-sm">Avg Points Increased</div>
           </div>
           <div className="text-center">
             <div className="text-3xl sm:text-4xl font-bold text-blue-400 mb-2">98%</div>
-            <div className="text-white/60 text-sm">Success Rate</div>
+            <div className="text-white/80 text-sm">Success Rate</div>
           </div>
           <div className="text-center">
             <div className="text-3xl sm:text-4xl font-bold text-white mb-2">5000+</div>
-            <div className="text-white/60 text-sm">Happy Clients</div>
+            <div className="text-white/80 text-sm">Happy Clients</div>
           </div>
         </div>
-      </HeroGeometric>
+        </HeroGeometric>
+      </section>
 
       {/* Lead Form Modal */}
       {showForm && (

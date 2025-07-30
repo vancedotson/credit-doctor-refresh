@@ -14,6 +14,12 @@ const ThankYou = () => {
   const [showVSL, setShowVSL] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
+  // Placeholder function for Footer prop - could redirect back to home page
+  const openForm = () => {
+    // Navigate to home page where the form is available
+    window.location.href = '/';
+  };
+
   useEffect(() => {
     // Track page view
     console.log('Page view: thank_you');
@@ -389,7 +395,7 @@ const ThankYou = () => {
         </motion.div>
       </main>
 
-      <Footer />
+      <Footer openForm={openForm} />
     </div>
   );
 };

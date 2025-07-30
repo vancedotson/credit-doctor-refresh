@@ -53,7 +53,7 @@ const services = [
 
 const Services = () => {
   return (
-    <section className="py-20 bg-secondary/50">
+    <section id="services" className="py-20 bg-secondary/50">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -65,7 +65,7 @@ const Services = () => {
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             Complete Credit Repair Solutions
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
             Our comprehensive approach addresses every aspect of your credit profile 
             to deliver lasting results and financial freedom.
           </p>
@@ -87,7 +87,7 @@ const Services = () => {
                       <service.icon className="w-8 h-8 text-primary-foreground" />
                     </div>
                     <h3 className="text-2xl font-bold mb-3">{service.title}</h3>
-                    <p className="text-muted-foreground mb-6">{service.description}</p>
+                    <p className="text-slate-400 mb-6">{service.description}</p>
                   </div>
 
                   <ul className="space-y-3 mb-6">
@@ -122,9 +122,20 @@ const Services = () => {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <Button size="lg" className="text-lg px-8 py-6 gradient-primary">
-            Get Started Today - Free Consultation
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Button size="lg" className="text-lg px-8 py-6 gradient-primary">
+              Get Started Today - Free Consultation
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="text-lg px-8 py-6"
+              onClick={() => window.location.href = 'tel:4054067323'}
+            >
+              <Phone className="w-5 h-5 mr-2" />
+              Call (405) 406-7323
+            </Button>
+          </div>
         </motion.div>
       </div>
     </section>

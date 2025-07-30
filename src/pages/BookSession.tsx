@@ -18,6 +18,15 @@ const BookSession = () => {
   const [leadData, setLeadData] = useState<any>(null);
   const location = useLocation();
 
+  // Placeholder function for Footer prop - could redirect to booking calendar
+  const openForm = () => {
+    // Scroll to calendar section since this page is already for booking
+    const calendarSection = document.querySelector('.calendar-container');
+    if (calendarSection) {
+      calendarSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   useEffect(() => {
     // Fix any potential overflow issues from previous pages
     document.body.style.overflow = 'unset';
@@ -411,7 +420,7 @@ const BookSession = () => {
         </motion.div>
       </main>
 
-      <Footer />
+      <Footer openForm={openForm} />
     </div>
   );
 };
