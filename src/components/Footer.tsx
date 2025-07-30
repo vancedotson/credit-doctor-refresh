@@ -210,12 +210,9 @@ const Footer = ({ openForm }: FooterProps) => {
       {/* Bottom Bar */}
       <div className="bg-black/90 py-6 border-t border-white/10">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4">
             <p className="text-white/85 text-sm">
               © {currentYear} Vance The Credit Doctor. All Rights Reserved.
-            </p>
-            <p className="text-white/80 text-sm">
-              Website by Lovable ❤️
             </p>
           </div>
         </div>
