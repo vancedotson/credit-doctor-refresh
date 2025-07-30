@@ -1,41 +1,30 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Phone, Mail } from "lucide-react";
+import { Phone, Mail } from "lucide-react";
 import vanceLogo from "@/assets/Vance-Logo-3 (2).png";
 
-const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+interface HeaderProps {
+  openForm: () => void;
+}
 
-  const navigation = [
-    { name: "Services", href: "#services" },
-    { name: "How It Works", href: "#how-it-works" },
-    { name: "Free Analysis", href: "#free-analysis" }
-  ];
-
-  const handleScrollTo = (href: string) => {
-    const element = document.querySelector(href) as HTMLElement;
-    if (element) {
-      const headerHeight = 120; // Account for fixed header height (top bar + nav)
-      const elementPosition = element.offsetTop - headerHeight;
-      
-      window.scrollTo({
-        top: elementPosition,
-        behavior: 'smooth'
-      });
-    }
-    setIsMenuOpen(false);
-  };
-
+const Header = ({ openForm }: HeaderProps) => {
   return (
     <motion.header
-      initial={{ opacity: 0, y: -20 }}
+      initial={{ opacity: 0, y: 0 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-border"
+      className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-border w-full"
+      style={{ 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        transform: 'none'
+      }}
     >
-      {/* Top contact bar */}
-      <div className="bg-primary text-primary-foreground py-2">
+      {/* Top contact bar - Desktop only */}
+      <div className="hidden md:block bg-primary text-primary-foreground py-2">
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
@@ -51,14 +40,14 @@ const Header = () => {
               </a>
             </div>
           </div>
-          <div className="hidden md:block">
+          <div>
             <span>🏆 5-Star Rated Credit Repair Service</span>
           </div>
         </div>
       </div>
 
       {/* Main navigation */}
-      <nav className="container mx-auto px-4 py-4">
+      <nav className="container mx-auto px-6 md:px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
@@ -69,79 +58,82 @@ const Header = () => {
               <img 
                 src={vanceLogo} 
                 alt="Vance The Credit Doctor Logo" 
-                className="h-12 w-auto object-contain hover:opacity-80 transition-opacity cursor-pointer"
+                className="h-10 md:h-12 w-auto object-contain hover:opacity-80 transition-opacity cursor-pointer"
               />
             </button>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-8">
-            {navigation.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => handleScrollTo(item.href)}
-                className="text-foreground hover:text-primary transition-colors font-medium"
-              >
-                {item.name}
-              </button>
-            ))}
+          {/* Desktop Navigation - Centered */}
+          <div className="hidden lg:flex items-center gap-8 absolute left-1/2 transform -translate-x-1/2">
+            <button
+              onClick={() => {
+                const section = document.querySelector('#services') as HTMLElement;
+                if (section) {
+                  const offsetTop = section.offsetTop - 120; // Account for fixed header
+                  window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                }
+              }}
+              className="text-foreground hover:text-primary transition-colors font-medium"
+            >
+              Services
+            </button>
+            <button
+              onClick={() => {
+                const section = document.querySelector('#how-it-works') as HTMLElement;
+                if (section) {
+                  const offsetTop = section.offsetTop - 120; // Account for fixed header
+                  window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                }
+              }}
+              className="text-foreground hover:text-primary transition-colors font-medium"
+            >
+              How It Works
+            </button>
+            <button
+              onClick={() => {
+                const section = document.querySelector('#free-analysis') as HTMLElement;
+                if (section) {
+                  const offsetTop = section.offsetTop - 120; // Account for fixed header
+                  window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                }
+              }}
+              className="text-foreground hover:text-primary transition-colors font-medium"
+            >
+              Free Analysis
+            </button>
           </div>
 
           {/* CTA Buttons */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
+            {/* Mobile: Get Started button that opens form */}
             <Button 
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              size="sm"
+              className="md:hidden bg-green-600 hover:bg-green-700 text-white px-3 py-2 text-sm"
+              onClick={openForm}
+            >
+              Get Started
+            </Button>
+            
+            {/* Desktop: Free Credit Analysis button that opens form */}
+            <Button 
+              size="sm"
+              className="hidden md:flex bg-green-600 hover:bg-green-700 text-white px-6 py-3 text-base"
+              onClick={openForm}
+            >
+              Free Credit Analysis
+            </Button>
+            
+            <Button 
+              size="sm"
+              variant="outline"
+              className="hidden md:flex border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-6 py-3 text-base"
               onClick={() => window.location.href = 'tel:4054067323'}
             >
               <Phone className="w-4 h-4 mr-2" />
               Call Now
             </Button>
           </div>
-
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2"
-          >
-            {isMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
-          </button>
         </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="lg:hidden mt-4 pb-4 border-t border-border"
-          >
-            <div className="flex flex-col gap-4 mt-4">
-              {navigation.map((item) => (
-                <button
-                  key={item.name}
-                  onClick={() => handleScrollTo(item.href)}
-                  className="text-foreground hover:text-primary transition-colors font-medium py-2 text-left"
-                >
-                  {item.name}
-                </button>
-              ))}
-              <div className="flex flex-col gap-3 mt-4">
-                <Button 
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                  onClick={() => window.location.href = 'tel:4054067323'}
-                >
-                  <Phone className="w-4 h-4 mr-2" />
-                  (405) 406-7323
-                </Button>
-              </div>
-            </div>
-          </motion.div>
-        )}
       </nav>
     </motion.header>
   );

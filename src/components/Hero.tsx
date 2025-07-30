@@ -64,10 +64,33 @@ const Hero = ({ showForm, openForm, closeForm }: HeroProps) => {
           title2="Fast & Guaranteed"
           description="Expert credit repair services that get results. Improve your credit score in 30-60 days with our proven 4-step process and 98% success rate."
         >
-        <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center items-center">
+        {/* Mobile Headshot - Show before buttons on mobile */}
+        <motion.div
+          initial={{ opacity: 0, y: 30, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{
+            duration: 1,
+            delay: 0.8,
+            ease: [0.23, 0.86, 0.39, 0.96],
+          }}
+          className="block md:hidden mb-8"
+        >
+          <div className="w-40 h-48 mx-auto rounded-lg overflow-hidden shadow-2xl">
+            <img 
+              src={vanceHeadshot} 
+              alt="Vance Dotson - Your Credit Repair Expert" 
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+          <p className="text-center text-white/90 text-sm mt-3 font-medium">
+            Vance Dotson - Your Credit Expert
+          </p>
+        </motion.div>
+
+        <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center items-center px-6 sm:px-0">
           <Button 
             size="lg" 
-            className="text-lg px-8 py-6 bg-green-600 hover:bg-green-700 text-white"
+            className="text-lg px-8 py-6 bg-green-600 hover:bg-green-700 text-white w-full sm:w-auto"
             onClick={openForm}
           >
             Get Free Credit Analysis
@@ -75,7 +98,7 @@ const Hero = ({ showForm, openForm, closeForm }: HeroProps) => {
           <Button 
             size="lg" 
             variant="outline" 
-            className="text-lg px-8 py-6 border-white/50 text-white bg-transparent hover:bg-white hover:text-black"
+            className="text-lg px-8 py-6 border-white/50 text-white bg-transparent hover:bg-white hover:text-black w-full sm:w-auto"
             onClick={() => window.location.href = 'tel:4054067323'}
           >
             <Phone className="w-5 h-5 mr-2" />
@@ -97,29 +120,6 @@ const Hero = ({ showForm, openForm, closeForm }: HeroProps) => {
             <span>98% Success Rate</span>
           </div>
         </div>
-
-        {/* Mobile Headshot - Trust signal between CTA and stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{
-            duration: 1,
-            delay: 1.2,
-            ease: [0.23, 0.86, 0.39, 0.96],
-          }}
-          className="block md:hidden mt-8 mb-8"
-        >
-          <div className="w-32 h-40 mx-auto rounded-lg overflow-hidden">
-            <img 
-              src={vanceHeadshot} 
-              alt="Vance Dotson - Your Credit Repair Expert" 
-              className="w-full h-full object-cover object-center"
-            />
-          </div>
-          <p className="text-center text-white/80 text-sm mt-3">
-            Vance Dotson - Your Credit Expert
-          </p>
-        </motion.div>
 
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
           <div className="text-center">

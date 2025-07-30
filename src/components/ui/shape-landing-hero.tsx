@@ -98,7 +98,7 @@ function HeroGeometric({
     };
 
     return (
-        <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#030303]">
+        <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#030303] pt-24 md:pt-0">
             <div className="absolute inset-0 bg-gradient-to-br from-green-500/[0.05] via-transparent to-blue-500/[0.05] blur-3xl" />
 
             <div className="absolute inset-0 overflow-hidden">
@@ -178,7 +178,7 @@ function HeroGeometric({
                         variants={fadeUpVariants}
                         initial="hidden"
                         animate="visible"
-                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.08] border border-white/[0.20] mb-4 md:mb-6"
+                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.08] border border-white/[0.20] mb-4 md:mb-4 md:mt-16"
                     >
                         <Circle className="h-2 w-2 fill-green-500/80" />
                         <span className="text-sm text-white/80 tracking-wide">
@@ -192,14 +192,14 @@ function HeroGeometric({
                         initial="hidden"
                         animate="visible"
                     >
-                        <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 md:mb-8 tracking-tight">
-                            <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/80">
+                        <h1 className="text-3xl sm:text-5xl md:text-8xl font-bold mb-6 md:mb-8 tracking-tight">
+                            <span className="text-white drop-shadow-lg">
                                 {title1}
                             </span>
                             <br />
                             <span
                                 className={cn(
-                                    "bg-clip-text text-transparent bg-gradient-to-r from-green-300 via-white/90 to-blue-300"
+                                    "bg-clip-text text-transparent bg-gradient-to-r from-green-300 via-white/90 to-blue-300 drop-shadow-lg"
                                 )}
                             >
                                 {title2}
@@ -213,7 +213,7 @@ function HeroGeometric({
                         initial="hidden"
                         animate="visible"
                     >
-                        <p className="text-base sm:text-lg md:text-xl text-white/80 mb-8 leading-relaxed font-light tracking-wide max-w-2xl mx-auto px-4">
+                        <p className="text-lg sm:text-xl md:text-xl text-white/90 mb-8 leading-relaxed font-medium tracking-wide max-w-2xl mx-auto px-4 drop-shadow-md">
                             {description}
                         </p>
                     </motion.div>

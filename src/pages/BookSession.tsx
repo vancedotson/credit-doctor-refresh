@@ -98,7 +98,7 @@ const BookSession = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black text-white">
-      <Header />
+      <Header openForm={openForm} />
       
       <main className="container mx-auto px-4 pt-32">
         {/* Hero Section - Clean and Focused */}

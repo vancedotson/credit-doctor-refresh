@@ -20,7 +20,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      <Header />
+      <Header openForm={openForm} />
       <main>
         <Hero showForm={showForm} openForm={openForm} closeForm={closeForm} />
         <Services />
