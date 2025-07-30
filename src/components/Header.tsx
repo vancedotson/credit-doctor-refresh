@@ -46,11 +46,11 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 gradient-primary rounded-full flex items-center justify-center">
+            <div className="w-12 h-12 gradient-primary rounded-full flex items-center justify-center" role="img" aria-label="Vance The Credit Doctor Logo">
               <span className="text-xl font-bold text-primary-foreground">V</span>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-primary">Vance</h1>
+              <div className="text-xl font-bold text-primary">Vance</div>
               <p className="text-sm text-muted-foreground">The Credit Doctor</p>
             </div>
           </div>
@@ -70,10 +70,10 @@ const Header = () => {
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-4">
-            <Button variant="outline">
+            <Button variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50">
               Free Analysis
             </Button>
-            <Button className="gradient-primary">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white">
               <Phone className="w-4 h-4 mr-2" />
               Call Now
             </Button>
@@ -113,10 +113,10 @@ const Header = () => {
                 </a>
               ))}
               <div className="flex flex-col gap-3 mt-4">
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full border-gray-300 text-gray-700 hover:bg-gray-50">
                   Free Analysis
                 </Button>
-                <Button className="w-full gradient-primary">
+                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
                   <Phone className="w-4 h-4 mr-2" />
                   (405) 406-7323
                 </Button>

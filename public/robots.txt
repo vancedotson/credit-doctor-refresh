@@ -1,3 +1,13 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://vancethecreditdoctor.com/sitemap.xml
+
+# Crawl-delay for courtesy
+Crawl-delay: 1
+
+# Allow specific bots
 User-agent: Googlebot
 Allow: /
 
@@ -10,5 +20,5 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
+User-agent: LinkedInBot
 Allow: /
