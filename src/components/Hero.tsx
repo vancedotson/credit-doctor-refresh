@@ -6,6 +6,8 @@ import { Phone, Star, CheckCircle, X, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { HeroGeometric } from "@/components/ui/shape-landing-hero";
+import { motion } from "framer-motion";
+import vanceHeadshot from "@/assets/VANCE DOTSON BG (2) (1).png";
 
 const Hero = () => {
   const [showForm, setShowForm] = useState(false);
@@ -98,6 +100,29 @@ const Hero = () => {
             <span>98% Success Rate</span>
           </div>
         </div>
+
+        {/* Mobile Headshot - Trust signal between CTA and stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 30, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{
+            duration: 1,
+            delay: 1.2,
+            ease: [0.23, 0.86, 0.39, 0.96],
+          }}
+          className="block md:hidden mt-8 mb-8"
+        >
+          <div className="w-32 h-40 mx-auto rounded-lg overflow-hidden">
+            <img 
+              src={vanceHeadshot} 
+              alt="Vance Dotson - Your Credit Repair Expert" 
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+          <p className="text-center text-white/60 text-sm mt-3">
+            Vance Dotson - Your Credit Expert
+          </p>
+        </motion.div>
 
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
           <div className="text-center">

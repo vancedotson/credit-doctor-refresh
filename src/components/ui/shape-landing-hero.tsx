@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Circle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import vanceHeadshot from "@/assets/VANCE DOTSON BG (2) (1).png";
 
 function ElegantShape({
     className,
@@ -146,6 +147,26 @@ function HeroGeometric({
                     className="left-[20%] md:left-[25%] top-[5%] md:top-[10%]"
                 />
             </div>
+
+            {/* Vance Headshot - Desktop: Right side, Mobile: In content flow */}
+            <motion.div
+                initial={{ opacity: 0, x: 50, scale: 0.8 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                transition={{
+                    duration: 1.2,
+                    delay: 0.8,
+                    ease: [0.23, 0.86, 0.39, 0.96],
+                }}
+                className="hidden md:block absolute right-[5%] top-1/2 transform -translate-y-1/2 z-5"
+            >
+                <div className="w-80 h-96">
+                    <img 
+                        src={vanceHeadshot} 
+                        alt="Vance Dotson - Credit Repair Expert" 
+                        className="w-full h-full object-cover object-center"
+                    />
+                </div>
+            </motion.div>
 
             <div className="relative z-10 container mx-auto px-4 md:px-6">
                 <div className="max-w-4xl mx-auto text-center">
