@@ -65,7 +65,7 @@ const Services = () => {
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             Complete Credit Repair Solutions
           </h2>
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
             Our comprehensive approach addresses every aspect of your credit profile 
             to deliver lasting results and financial freedom.
           </p>

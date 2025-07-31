@@ -80,7 +80,7 @@ const Process = () => {
               <h2 className="text-4xl lg:text-5xl font-bold mb-6">
                 How We Fix Your Credit
               </h2>
-              <p className="text-xl text-slate-300">
+              <p className="text-xl text-slate-600">
                 Our proven 4-step process has helped thousands of clients 
                 achieve their credit goals faster than they thought possible.
               </p>

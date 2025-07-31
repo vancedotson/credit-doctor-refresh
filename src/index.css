@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Khand Bold Font for Headlines */
+@font-face {
+  font-family: 'Khand Bold';
+  src: url('./assets/Khand_Complete/Fonts/WEB/fonts/Khand-Bold.woff2') format('woff2'),
+       url('./assets/Khand_Complete/Fonts/WEB/fonts/Khand-Bold.woff') format('woff'),
+       url('./assets/Khand_Complete/Fonts/WEB/fonts/Khand-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+
 /* Modern Credit Repair Design System - Professional & Trustworthy */
 
 @layer base {
@@ -156,6 +167,33 @@
     backdrop-filter: blur(10px);
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Headline Font Classes */
+  .headline-font {
+    font-family: 'Khand Bold', 'Khand', system-ui, -apple-system, sans-serif;
+    font-weight: 700;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Khand Bold', 'Khand', system-ui, -apple-system, sans-serif;
+    font-weight: 700;
+  }
+
+  /* Desktop Letter Spacing - Apply to all text elements */
+  @media (min-width: 768px) {
+    *, h1, h2, h3, h4, h5, h6, p, span, div, button, input, textarea, label {
+      letter-spacing: -1px;
+    }
+    
+    /* Override: Normal letter spacing for headlines within cards for better readability */
+    .card h1, .card h2, .card h3,
+    [data-card] h1, [data-card] h2, [data-card] h3,
+    .bg-white h1, .bg-white h2, .bg-white h3,
+    .shadow h1, .shadow h2, .shadow h3,
+    .rounded h1, .rounded h2, .rounded h3 {
+      letter-spacing: normal;
+    }
   }
 
   /* Mobile Optimization & Overflow Prevention */
