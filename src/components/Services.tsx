@@ -39,7 +39,11 @@ const services = [
   }
 ];
 
-const Services = () => {
+interface ServicesProps {
+  openForm?: () => void;
+}
+
+const Services = ({ openForm }: ServicesProps) => {
   return (
     <section id="services" className="py-20 bg-secondary/50">
       <div className="container mx-auto px-4">
@@ -95,7 +99,12 @@ const Services = () => {
                         <Star key={star} className="w-4 h-4 fill-warning text-warning" />
                       ))}
                     </div>
-                    <Button variant="outline" size="sm" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                      onClick={openForm}
+                    >
                       Learn More
                     </Button>
                   </div>
@@ -113,18 +122,9 @@ const Services = () => {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex justify-center">
             <Button size="lg" className="text-lg px-8 py-6 gradient-primary">
               Get Started Today - Free Consultation
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="text-lg px-8 py-6"
-              onClick={() => window.location.href = 'tel:4054067323'}
-            >
-              <Phone className="w-5 h-5 mr-2" />
-              Call (405) 406-7323
             </Button>
           </div>
         </motion.div>

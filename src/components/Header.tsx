@@ -28,12 +28,6 @@ const Header = ({ openForm }: HeaderProps) => {
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
-              <Phone className="w-4 h-4" />
-              <a href="tel:4054067323" className="hover:underline">
-                <span>(405) 406-7323</span>
-              </a>
-            </div>
-            <div className="flex items-center gap-2">
               <Mail className="w-4 h-4" />
               <a href="mailto:info@vancethecreditdoctor.com" className="hover:underline">
                 <span>info@vancethecreditdoctor.com</span>
@@ -104,7 +98,7 @@ const Header = ({ openForm }: HeaderProps) => {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex items-center gap-2 md:gap-4">
+          <div className="flex items-center justify-center">
             {/* Mobile: Get Started button that opens form */}
             <Button 
               size="sm"
@@ -121,16 +115,6 @@ const Header = ({ openForm }: HeaderProps) => {
               onClick={openForm}
             >
               Free Credit Analysis
-            </Button>
-            
-            <Button 
-              size="sm"
-              variant="outline"
-              className="hidden md:flex border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-6 py-3 text-base"
-              onClick={() => window.location.href = 'tel:4054067323'}
-            >
-              <Phone className="w-4 h-4 mr-2" />
-              Call Now
             </Button>
           </div>
         </div>

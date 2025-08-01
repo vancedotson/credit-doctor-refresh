@@ -87,22 +87,13 @@ const Hero = ({ showForm, openForm, closeForm }: HeroProps) => {
           </p>
         </motion.div>
 
-        <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center items-center px-6 sm:px-0">
+        <div className="flex justify-center mb-8 px-6 sm:px-0">
           <Button 
             size="lg" 
             className="text-lg px-8 py-6 bg-green-600 hover:bg-green-700 text-white w-full sm:w-auto"
             onClick={openForm}
           >
             Get Free Credit Analysis
-          </Button>
-          <Button 
-            size="lg" 
-            variant="outline" 
-            className="text-lg px-8 py-6 border-white/50 text-white bg-transparent hover:bg-white hover:text-black w-full sm:w-auto"
-            onClick={() => window.location.href = 'tel:4054067323'}
-          >
-            <Phone className="w-5 h-5 mr-2" />
-            (405) 406-7323
           </Button>
         </div>
 

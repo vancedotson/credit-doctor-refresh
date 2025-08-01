@@ -23,7 +23,7 @@ const Index = () => {
       <Header openForm={openForm} />
       <main>
         <Hero showForm={showForm} openForm={openForm} closeForm={closeForm} />
-        <Services />
+        <Services openForm={openForm} />
         <Process />
       </main>
       <Footer openForm={openForm} />

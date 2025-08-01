@@ -60,7 +60,7 @@ const Footer = ({ openForm }: FooterProps) => {
               Join thousands of satisfied clients who have gotten deletions<br />
               and unlocked better financial opportunities.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex justify-center">
               <Button 
                 size="lg" 
                 className="text-lg px-8 py-6 bg-white text-primary hover:bg-white/90"
@@ -68,14 +68,6 @@ const Footer = ({ openForm }: FooterProps) => {
               >
                 Get Free Credit Analysis
                 <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-              <Button 
-                size="lg" 
-                className="text-lg px-8 py-6 bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white font-bold transition-all duration-200"
-                onClick={() => window.location.href = 'tel:4054067323'}
-              >
-                <Phone className="w-5 h-5 mr-2" />
-                (405) 406-7323
               </Button>
             </div>
             
@@ -114,12 +106,6 @@ const Footer = ({ openForm }: FooterProps) => {
                 through deletions and expert guidance.
               </p>
               <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <Phone className="w-5 h-5" />
-                  <a href="tel:4054067323" className="hover:underline">
-                    <span>(405) 406-7323</span>
-                  </a>
-                </div>
                 <div className="flex items-center gap-3">
                   <Mail className="w-5 h-5" />
                   <a href="mailto:info@vancethecreditdoctor.com" className="hover:underline">
