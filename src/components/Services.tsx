@@ -64,7 +64,7 @@ const Services = ({ openForm }: ServicesProps) => {
           </p>
         </motion.div>
 
-        <div className="max-w-[60%] mx-auto">
+        <div className="max-w-full md:max-w-[60%] mx-auto">
           <div className="grid md:grid-cols-2 gap-8">
           {services.map((service, index) => (
             <motion.div
