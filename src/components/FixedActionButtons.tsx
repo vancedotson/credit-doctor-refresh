@@ -13,6 +13,15 @@ const FixedActionButtons = ({ onFormOpen }: FixedActionButtonsProps) => {
   return (
     <div className="fixed-action-navbar bg-white border-t border-gray-200 shadow-lg">
       <div className="flex items-center justify-center gap-4 px-4 py-3">
+        {/* Free Credit Analysis Button */}
+        <Button
+          onClick={onFormOpen}
+          className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white font-medium"
+          size="sm"
+        >
+          Free Credit Analysis
+        </Button>
+
         {/* Phone Button */}
         <Button
           onClick={handlePhoneCall}
@@ -21,15 +30,6 @@ const FixedActionButtons = ({ onFormOpen }: FixedActionButtonsProps) => {
           className="p-3 border-green-600 text-green-600 hover:bg-green-600 hover:text-white"
         >
           <Phone className="w-5 h-5" />
-        </Button>
-
-        {/* Free Credit Analysis Button */}
-        <Button
-          onClick={onFormOpen}
-          className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white font-medium"
-          size="sm"
-        >
-          Free Credit Analysis
         </Button>
 
         {/* Message Icon Button */}
