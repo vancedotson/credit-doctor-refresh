@@ -16,26 +16,14 @@ const services = [
   {
     icon: CreditCard,
     title: "Credit Report Analysis",
-    description: "Comprehensive review of all three credit bureaus to identify errors and areas for improvement.",
-    features: ["Detailed credit report review", "Error identification", "Personalized improvement plan"]
-  },
-  {
-    icon: TrendingUp,
-    title: "Score Improvement",
-    description: "Strategic dispute process to remove negative items and boost your credit score quickly.",
-    features: ["Negative item removal", "Score optimization", "30-60 day results"]
+    description: "Comprehensive review of all three credit bureaus to identify errors and areas for deletion.",
+    features: ["Detailed credit report review", "Error identification", "Personalized deletion plan"]
   },
   {
     icon: Shield,
     title: "Credit Protection",
-    description: "Ongoing monitoring and protection to maintain your improved credit score long-term.",
+    description: "Ongoing monitoring and protection to maintain your deletions and results long-term.",
     features: ["Identity theft protection", "Credit monitoring", "Fraud alerts"]
-  },
-  {
-    icon: FileText,
-    title: "Debt Validation",
-    description: "Challenge questionable debts and ensure all reported items are legitimate and accurate.",
-    features: ["Debt verification", "Collection disputes", "Legal compliance checks"]
   },
   {
     icon: Users,
@@ -45,9 +33,9 @@ const services = [
   },
   {
     icon: Phone,
-    title: "24/7 Support",
+    title: "Customer Support",
     description: "Round-the-clock customer support to answer questions and provide updates on your case.",
-    features: ["24/7 availability", "Progress updates", "Expert advice"]
+    features: ["Live Support", "Progress updates", "Expert advice"]
   }
 ];
 
@@ -72,7 +60,8 @@ const Services = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="max-w-[60%] mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
           {services.map((service, index) => (
             <motion.div
               key={index}
@@ -114,6 +103,7 @@ const Services = () => {
               </Card>
             </motion.div>
           ))}
+          </div>
         </div>
 
         <motion.div

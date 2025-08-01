@@ -60,9 +60,9 @@ const Hero = ({ showForm, openForm, closeForm }: HeroProps) => {
       <section id="hero">
         <HeroGeometric
           badge="🏆 5-Star Credit Repair Service"
-          title1="We Sue For A"
-          title2="Better Credit Score"
-          description="Expert credit repair services that get results. Improve your credit score with our proven 4-step process and 98% success rate."
+          title1="We Sue For"
+          title2="A Deletion"
+          description="Expert credit repair services that get results. We get deletions with our proven 4-step process and 98% success rate."
         >
         {/* Mobile Headshot - Show before buttons on mobile */}
         <motion.div
@@ -165,7 +165,7 @@ const Hero = ({ showForm, openForm, closeForm }: HeroProps) => {
                   Get Your Free Credit Analysis
                 </CardTitle>
                 <p className="text-gray-600">
-                  Enter your information to access our exclusive credit improvement video and book your consultation.
+                  Enter your information to access our exclusive credit deletion video and book your consultation.
                 </p>
               </CardHeader>
               <CardContent>

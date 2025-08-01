@@ -23,7 +23,7 @@ const steps = [
   {
     icon: Target,
     title: "Personalized Strategy",
-    description: "Our experts create a custom action plan targeting the most impactful improvements.",
+    description: "Our experts create a custom action plan targeting the most impactful deletions.",
     duration: "1-2 days"
   },
   {
@@ -35,7 +35,7 @@ const steps = [
   {
     icon: TrendingUp,
     title: "Score Improvement",
-    description: "Watch your credit score improve as negative items are removed and errors corrected.",
+    description: "Watch us get deletions as negative items are removed and errors corrected.",
     duration: "30-60 days"
   }
 ];

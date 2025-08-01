@@ -71,7 +71,7 @@ const BookSession = () => {
     {
       icon: Users,
       title: "Trusted by 1000+",
-      description: "Successfully helped over 1,000 clients improve their credit"
+      description: "Successfully helped over 1,000 clients get deletions"
     }
   ];
 
@@ -116,7 +116,7 @@ const BookSession = () => {
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Get a comprehensive 30-minute consultation where we'll analyze your credit report, 
-            identify improvement opportunities, and create a personalized action plan.
+            identify deletion opportunities, and create a personalized action plan.
           </p>
         </motion.div>
 

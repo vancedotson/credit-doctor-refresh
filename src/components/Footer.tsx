@@ -57,7 +57,7 @@ const Footer = ({ openForm }: FooterProps) => {
               Ready To Transform <br className="md:hidden" />Your Credit Score?
             </h2>
             <p className="text-xl text-white/95 mb-8 max-w-2xl mx-auto">
-              Join thousands of satisfied clients who have improved their credit<br />
+              Join thousands of satisfied clients who have gotten deletions<br />
               and unlocked better financial opportunities.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -111,7 +111,7 @@ const Footer = ({ openForm }: FooterProps) => {
               </div>
               <p className="text-white/90 mb-6">
                 Professional credit repair services helping you achieve financial freedom 
-                through improved credit scores and expert guidance.
+                through deletions and expert guidance.
               </p>
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
