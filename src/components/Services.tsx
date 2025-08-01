@@ -123,8 +123,13 @@ const Services = ({ openForm }: ServicesProps) => {
           className="text-center mt-16"
         >
           <div className="flex justify-center">
-            <Button size="lg" className="text-lg px-8 py-6 gradient-primary">
-              Get Started Today - Free Consultation
+            <Button 
+              size="lg" 
+              className="text-lg px-8 py-6 gradient-primary"
+              onClick={openForm}
+            >
+              <span className="hidden sm:inline">Get Started Today - Free Consultation</span>
+              <span className="sm:hidden">Book A Free Consultation</span>
             </Button>
           </div>
         </motion.div>
