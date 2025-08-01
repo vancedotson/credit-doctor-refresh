@@ -57,45 +57,6 @@ const Header = ({ openForm }: HeaderProps) => {
             </button>
           </div>
 
-          {/* Desktop Navigation - Centered */}
-          <div className="hidden lg:flex items-center gap-8 absolute left-1/2 transform -translate-x-1/2">
-            <button
-              onClick={() => {
-                const section = document.querySelector('#services') as HTMLElement;
-                if (section) {
-                  const offsetTop = section.offsetTop - 120; // Account for fixed header
-                  window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-                }
-              }}
-              className="text-foreground hover:text-primary transition-colors font-medium"
-            >
-              Services
-            </button>
-            <button
-              onClick={() => {
-                const section = document.querySelector('#how-it-works') as HTMLElement;
-                if (section) {
-                  const offsetTop = section.offsetTop - 120; // Account for fixed header
-                  window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-                }
-              }}
-              className="text-foreground hover:text-primary transition-colors font-medium"
-            >
-              How It Works
-            </button>
-            <button
-              onClick={() => {
-                const section = document.querySelector('#free-analysis') as HTMLElement;
-                if (section) {
-                  const offsetTop = section.offsetTop - 120; // Account for fixed header
-                  window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-                }
-              }}
-              className="text-foreground hover:text-primary transition-colors font-medium"
-            >
-              Free Analysis
-            </button>
-          </div>
 
           {/* CTA Buttons */}
           <div className="flex items-center justify-center">
