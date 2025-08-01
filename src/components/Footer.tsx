@@ -45,7 +45,7 @@ const Footer = ({ openForm }: FooterProps) => {
   return (
     <footer className="bg-black text-white">
       {/* CTA Section */}
-      <div id="free-analysis" className="gradient-hero py-16">
+      <div id="free-analysis" className="bg-black py-16">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -54,10 +54,10 @@ const Footer = ({ openForm }: FooterProps) => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-white">
-              Ready to Transform Your Credit Score?
+              Ready To Transform <br className="md:hidden" />Your Credit Score?
             </h2>
             <p className="text-xl text-white/95 mb-8 max-w-2xl mx-auto">
-              Join thousands of satisfied clients who have improved their credit 
+              Join thousands of satisfied clients who have improved their credit<br />
               and unlocked better financial opportunities.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -71,8 +71,7 @@ const Footer = ({ openForm }: FooterProps) => {
               </Button>
               <Button 
                 size="lg" 
-                variant="outline" 
-                className="text-lg px-8 py-6 border-white text-white bg-transparent hover:bg-white hover:text-primary"
+                className="text-lg px-8 py-6 bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white font-bold transition-all duration-200"
                 onClick={() => window.location.href = 'tel:4054067323'}
               >
                 <Phone className="w-5 h-5 mr-2" />

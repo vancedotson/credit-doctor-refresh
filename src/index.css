@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Fixed action navbar positioning */
+.fixed-action-navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+}
+
+@media (min-width: 768px) {
+  .fixed-action-navbar {
+    display: none;
+  }
+}
+
 /* Khand Bold Font for Headlines */
 @font-face {
   font-family: 'Khand Bold';
@@ -196,6 +211,108 @@
     }
   }
 
+  /* Gradient Background Animations - More Dynamic */
+  @keyframes first {
+    0% {
+      transform: rotate(0deg) translateX(0px) translateY(0px);
+    }
+    25% {
+      transform: rotate(90deg) translateX(100px) translateY(-50px);
+    }
+    50% {
+      transform: rotate(180deg) translateX(-80px) translateY(120px);
+    }
+    75% {
+      transform: rotate(270deg) translateX(150px) translateY(80px);
+    }
+    100% {
+      transform: rotate(360deg) translateX(0px) translateY(0px);
+    }
+  }
+
+  @keyframes second {
+    0% {
+      transform: rotate(0deg) translateX(0px) translateY(0px);
+    }
+    25% {
+      transform: rotate(120deg) translateX(-120px) translateY(100px);
+    }
+    50% {
+      transform: rotate(240deg) translateX(90px) translateY(-110px);
+    }
+    75% {
+      transform: rotate(300deg) translateX(-60px) translateY(-80px);
+    }
+    100% {
+      transform: rotate(360deg) translateX(0px) translateY(0px);
+    }
+  }
+
+  @keyframes third {
+    0% {
+      transform: rotate(45deg) translateX(0px) translateY(0px);
+    }
+    30% {
+      transform: rotate(165deg) translateX(130px) translateY(70px);
+    }
+    60% {
+      transform: rotate(285deg) translateX(-100px) translateY(-90px);
+    }
+    100% {
+      transform: rotate(405deg) translateX(0px) translateY(0px);
+    }
+  }
+
+  @keyframes fourth {
+    0% {
+      transform: rotate(180deg) translateX(0px) translateY(0px);
+    }
+    40% {
+      transform: rotate(320deg) translateX(-110px) translateY(130px);
+    }
+    80% {
+      transform: rotate(480deg) translateX(140px) translateY(-70px);
+    }
+    100% {
+      transform: rotate(540deg) translateX(0px) translateY(0px);
+    }
+  }
+
+  @keyframes fifth {
+    0% {
+      transform: rotate(270deg) translateX(0px) translateY(0px);
+    }
+    35% {
+      transform: rotate(390deg) translateX(80px) translateY(-120px);
+    }
+    70% {
+      transform: rotate(510deg) translateX(-140px) translateY(60px);
+    }
+    100% {
+      transform: rotate(630deg) translateX(0px) translateY(0px);
+    }
+  }
+
+  .animate-first {
+    animation: first 12s ease-in-out infinite;
+  }
+
+  .animate-second {
+    animation: second 15s ease-in-out infinite reverse;
+  }
+
+  .animate-third {
+    animation: third 18s ease-in-out infinite;
+  }
+
+  .animate-fourth {
+    animation: fourth 14s ease-in-out infinite reverse;
+  }
+
+  .animate-fifth {
+    animation: fifth 16s ease-in-out infinite;
+  }
+
   /* Mobile Optimization & Overflow Prevention */
   html, body {
     overflow-x: hidden;
@@ -245,6 +362,11 @@
     header * {
       transform: none !important;
       transition: none !important;
+    }
+
+    /* Add bottom padding for fixed action buttons */
+    main {
+      padding-bottom: 80px;
     }
   }
 }

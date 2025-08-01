@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 import { 
   FileSearch, 
   Target, 
@@ -41,8 +42,15 @@ const steps = [
 
 const Process = () => {
   return (
-    <section id="how-it-works" className="py-20 bg-background">
-      <div className="container mx-auto px-4">
+    <section id="how-it-works" className="relative py-20 overflow-hidden">
+      <BackgroundGradientAnimation
+        containerClassName="absolute inset-0"
+        className=""
+        interactive={true}
+      >
+        <div className="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
+      </BackgroundGradientAnimation>
+      <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Column - Image */}
           <motion.div
@@ -77,10 +85,10 @@ const Process = () => {
             viewport={{ once: true }}
           >
             <div className="mb-12">
-              <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+              <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-white">
                 How We Fix Your Credit
               </h2>
-              <p className="text-xl text-slate-600">
+              <p className="text-xl text-white">
                 Our proven 4-step process has helped thousands of clients 
                 achieve their credit goals faster than they thought possible.
               </p>
@@ -103,13 +111,10 @@ const Process = () => {
                           <step.icon className="w-8 h-8 text-primary-foreground" />
                         </div>
                         <div className="flex-1">
-                          <div className="flex items-center justify-between mb-2">
+                          <div className="mb-2">
                             <h3 className="text-xl font-bold">
                               Step {index + 1}: {step.title}
                             </h3>
-                            <span className="text-sm bg-secondary text-secondary-foreground px-3 py-1 rounded-full">
-                              {step.duration}
-                            </span>
                           </div>
                           <p className="text-slate-400 mb-4">{step.description}</p>
                           <div className="flex items-center gap-2 text-success">

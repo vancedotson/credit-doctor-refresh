@@ -60,9 +60,9 @@ const Hero = ({ showForm, openForm, closeForm }: HeroProps) => {
       <section id="hero">
         <HeroGeometric
           badge="🏆 5-Star Credit Repair Service"
-          title1="Fix Your Credit Score"
-          title2="Fast & Guaranteed"
-          description="Expert credit repair services that get results. Improve your credit score in 30-60 days with our proven 4-step process and 98% success rate."
+          title1="We Sue For A"
+          title2="Better Credit Score"
+          description="Expert credit repair services that get results. Improve your credit score with our proven 4-step process and 98% success rate."
         >
         {/* Mobile Headshot - Show before buttons on mobile */}
         <motion.div
@@ -109,11 +109,11 @@ const Hero = ({ showForm, openForm, closeForm }: HeroProps) => {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-white/85 text-sm">
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-green-400" />
-            <span>100% Money Back Guarantee</span>
+            <span>Law Based Disputing</span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-green-400" />
-            <span>Results in 30-60 Days</span>
+            <span>Results Guaranteed</span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-green-400" />
@@ -121,7 +121,7 @@ const Hero = ({ showForm, openForm, closeForm }: HeroProps) => {
           </div>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
+        <div className="mt-12 mb-8 md:mb-0 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto">
           <div className="text-center">
             <div className="text-3xl sm:text-4xl font-bold text-green-400 mb-2">150+</div>
             <div className="text-white/80 text-sm">Avg Points Increased</div>

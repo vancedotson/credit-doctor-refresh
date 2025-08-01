@@ -63,10 +63,11 @@ const Services = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            Complete Credit Repair Solutions
+            Complete Credit <br className="md:hidden" />Repair Solutions
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Our comprehensive approach addresses every aspect of your credit profile 
+            Our comprehensive approach addresses every aspect of your credit profile
+            <br />
             to deliver lasting results and financial freedom.
           </p>
         </motion.div>

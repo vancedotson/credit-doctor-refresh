@@ -4,18 +4,18 @@ import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import Process from "@/components/Process";
 import Footer from "@/components/Footer";
+import FixedActionButtons from "@/components/FixedActionButtons";
+import ContactFormModal from "@/components/ContactFormModal";
 
 const Index = () => {
   const [showForm, setShowForm] = useState(false);
 
   const openForm = () => {
     setShowForm(true);
-    document.body.style.overflow = 'hidden';
   };
 
   const closeForm = () => {
     setShowForm(false);
-    document.body.style.overflow = 'unset';
   };
 
   return (
@@ -27,6 +27,12 @@ const Index = () => {
         <Process />
       </main>
       <Footer openForm={openForm} />
+      
+      {/* Fixed Action Buttons - Mobile Only */}
+      {!showForm && <FixedActionButtons onFormOpen={openForm} />}
+      
+      {/* Contact Form Modal */}
+      <ContactFormModal isOpen={showForm} onClose={closeForm} />
     </div>
   );
 };
