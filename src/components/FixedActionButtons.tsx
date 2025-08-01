@@ -13,6 +13,16 @@ const FixedActionButtons = ({ onFormOpen }: FixedActionButtonsProps) => {
   return (
     <div className="fixed-action-navbar bg-white border-t border-gray-200 shadow-lg">
       <div className="flex items-center justify-center gap-4 px-4 py-3">
+        {/* Phone Button */}
+        <Button
+          onClick={handlePhoneCall}
+          variant="outline"
+          size="sm"
+          className="p-3 border-green-600 text-green-600 hover:bg-green-600 hover:text-white"
+        >
+          <Phone className="w-5 h-5" />
+        </Button>
+
         {/* Free Credit Analysis Button */}
         <Button
           onClick={onFormOpen}

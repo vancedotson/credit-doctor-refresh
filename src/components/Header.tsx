@@ -28,9 +28,9 @@ const Header = ({ openForm }: HeaderProps) => {
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
-              <Mail className="w-4 h-4" />
-              <a href="mailto:info@vancethecreditdoctor.com" className="hover:underline">
-                <span>info@vancethecreditdoctor.com</span>
+              <Phone className="w-4 h-4" />
+              <a href="tel:+14054067323" className="hover:underline">
+                <span>(405) 406-7323</span>
               </a>
             </div>
           </div>
