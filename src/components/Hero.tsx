@@ -62,7 +62,7 @@ const Hero = ({ showForm, openForm, closeForm }: HeroProps) => {
           badge="🏆 5-Star Credit Repair Service"
           title1="We Sue For"
           title2="A Deletion"
-          description="Expert credit repair services that get results. We get deletions with our proven 4-step process and 98% success rate."
+          description="Expert credit repair services that get results. We get deletions with our proven 4-step process and 99.9% success rate."
         >
         {/* Mobile Headshot - Show before buttons on mobile */}
         <motion.div
@@ -108,7 +108,7 @@ const Hero = ({ showForm, openForm, closeForm }: HeroProps) => {
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-green-400" />
-            <span>98% Success Rate</span>
+            <span>99.9% Success Rate</span>
           </div>
         </div>
 
@@ -118,11 +118,11 @@ const Hero = ({ showForm, openForm, closeForm }: HeroProps) => {
             <div className="text-white/80 text-sm">Avg Points Increased</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl sm:text-4xl font-bold text-blue-400 mb-2">98%</div>
+            <div className="text-3xl sm:text-4xl font-bold text-blue-400 mb-2">99.9%</div>
             <div className="text-white/80 text-sm">Success Rate</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl sm:text-4xl font-bold text-white mb-2">5000+</div>
+            <div className="text-3xl sm:text-4xl font-bold text-white mb-2">2000+</div>
             <div className="text-white/80 text-sm">Happy Clients</div>
           </div>
         </div>

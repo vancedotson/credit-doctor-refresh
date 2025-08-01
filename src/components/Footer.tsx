@@ -77,7 +77,7 @@ const Footer = ({ openForm }: FooterProps) => {
                   <Star key={star} className="w-5 h-5 fill-warning text-warning" />
                 ))}
               </div>
-              <span>Trusted by 5,000+ Happy Clients</span>
+              <span>Trusted by 2,000+ Happy Clients</span>
             </div>
           </motion.div>
         </div>
