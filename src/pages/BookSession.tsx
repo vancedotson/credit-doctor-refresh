@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { HeroVideoDialog } from "@/components/ui/hero-video-dialog";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-const VanceTutorialVideo = "/Vancetutorial.mp4";
+import VanceTutorialVideo from "@/assets/Vancetutorial.mp4";
 import HeroImage from "@/assets/hero-vance.jpg";
 
 const BookSession = () => {
