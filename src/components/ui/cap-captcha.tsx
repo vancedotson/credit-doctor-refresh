@@ -1,143 +1,325 @@
-import { useEffect, useRef, useState } from 'react';
-import { createChallenge, redeemChallenge } from '@/api/cap';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 
-interface CapCaptchaProps {
-  onVerify: (token: string) => void;
-  onError?: (error: string) => void;
-  className?: string;
-}
-
+// Extend JSX IntrinsicElements to include cap-widget
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      'cap-widget': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
+      'cap-widget': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
         'data-cap-api-endpoint'?: string;
+        'data-cap-theme'?: string;
+        'data-cap-worker-count'?: string;
         'data-cap-hidden-field-name'?: string;
-      }, HTMLElement>;
+        'data-cap-i18n-verifying-label'?: string;
+        'data-cap-i18n-initial-state'?: string;
+        'data-cap-i18n-solved-label'?: string;
+        'data-cap-i18n-error-label'?: string;
+        id?: string;
+      };
     }
   }
 }
 
-export const CapCaptcha = ({ onVerify, onError, className = '' }: CapCaptchaProps) => {
-  const widgetRef = useRef<HTMLElement>(null);
+interface CapCaptchaProps {
+  onVerify: (token: string) => void;
+  onError?: (error: string) => void;
+  siteKey?: string;
+  serverUrl?: string;
+  theme?: 'light' | 'dark';
+  className?: string;
+}
+
+export const CapCaptcha: React.FC<CapCaptchaProps> = ({
+  onVerify,
+  onError,
+  siteKey = import.meta.env.VITE_CAP_SITE_KEY || '27d391833c',
+  serverUrl = import.meta.env.VITE_CAP_SERVER_URL || 'http://localhost:3000',
+  theme = 'light',
+  className = ''
+}) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [apiEndpoint] = useState('/api/cap'); // We'll need to set up actual API endpoints
+  const [isLoading, setIsLoading] = useState(true);
+  const [isVerified, setIsVerified] = useState(false);
+  const [verificationToken, setVerificationToken] = useState<string | null>(null);
+  const [error, setError] = useState<string>('');
+  const widgetRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scriptRef = useRef<HTMLScriptElement | null>(null);
+  const eventListenersAttached = useRef(false);
+  const widgetId = useRef(`cap-widget-${Math.random().toString(36).substr(2, 9)}`);
+  const isInitialized = useRef(false);
+  const verificationTokenRef = useRef<string | null>(null);
 
+  // Construct the API endpoint according to Cap.js Standalone docs
+  const apiEndpoint = `${serverUrl}/${siteKey}/`;
+
+  // Load Cap.js widget library
   useEffect(() => {
-    // Load Cap.js script dynamically
-    const loadCapScript = () => {
-      if (document.querySelector('script[src*="@cap.js/widget"]')) {
-        setIsLoaded(true);
-        return;
-      }
+    const loadCapWidget = async () => {
+      try {
+        setIsLoading(true);
+        setError('');
 
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/@cap.js/widget@0.1.25';
-      script.onload = () => {
-        console.log('Cap.js widget loaded successfully');
-        setIsLoaded(true);
-      };
-      script.onerror = () => {
-        console.error('Failed to load Cap.js widget');
-        onError?.('Failed to load CAPTCHA widget');
-      };
-      document.head.appendChild(script);
+        // Check if Cap.js is already loaded globally
+        if ((window as any).customElements && (window as any).customElements.get('cap-widget')) {
+          console.log('Cap.js widget already available');
+          setIsLoaded(true);
+          setIsLoading(false);
+          return;
+        }
+
+        // Check if script is already present
+        const existingScript = document.querySelector('script[src="https://cdn.jsdelivr.net/npm/@cap.js/widget"]');
+        if (existingScript) {
+          console.log('Cap.js script already exists, waiting for load...');
+          
+          const checkLoaded = () => {
+            if ((window as any).customElements && (window as any).customElements.get('cap-widget')) {
+              setIsLoaded(true);
+              setIsLoading(false);
+            } else {
+              setTimeout(checkLoaded, 100);
+            }
+          };
+          checkLoaded();
+          return;
+        }
+
+        // Load official Cap.js widget library from CDN
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/@cap.js/widget';
+        script.async = true;
+        
+        script.onload = () => {
+          console.log('Cap.js widget library loaded successfully');
+          // Wait a bit for the custom element to be defined
+          setTimeout(() => {
+            setIsLoaded(true);
+            setIsLoading(false);
+          }, 100);
+        };
+        
+        script.onerror = (err) => {
+          console.error('Failed to load Cap.js widget library:', err);
+          setError('Failed to load CAPTCHA library');
+          onError?.('Failed to load CAPTCHA library');
+          setIsLoading(false);
+        };
+
+        document.head.appendChild(script);
+        scriptRef.current = script;
+
+      } catch (err: any) {
+        console.error('Error loading Cap.js:', err);
+        setError(err.message || 'Failed to initialize CAPTCHA');
+        onError?.(err.message || 'Failed to initialize CAPTCHA');
+        setIsLoading(false);
+      }
     };
 
-    loadCapScript();
+    loadCapWidget();
   }, [onError]);
 
+  // Initialize widget and set up event listeners
   useEffect(() => {
-    if (!isLoaded || !widgetRef.current) return;
+    if (!isLoaded || !containerRef.current || isInitialized.current || verificationTokenRef.current) return;
 
-    const widget = widgetRef.current;
+    const initializeWidget = () => {
+      try {
+        // Create the widget element
+        const widget = document.createElement('cap-widget');
+        widget.id = widgetId.current;
+        widget.setAttribute('data-cap-api-endpoint', apiEndpoint);
+        widget.setAttribute('data-cap-theme', theme);
+        widget.setAttribute('data-cap-i18n-initial-state', "I'm a human");
+        widget.setAttribute('data-cap-i18n-verifying-label', 'Verifying...');
+        widget.setAttribute('data-cap-i18n-solved-label', 'Verified ✓');
+        widget.setAttribute('data-cap-i18n-error-label', 'Error - Try again');
 
-    const handleSolve = (e: any) => {
-      console.log('Cap.js solve event:', e.detail);
-      const token = e.detail.token;
-      if (token) {
-        console.log('CAPTCHA solved successfully, token:', token);
-        onVerify(token);
-      } else {
-        console.error('No token received from Cap.js');
-        onError?.('Invalid CAPTCHA token');
+        // Clear container and add widget
+        if (containerRef.current) {
+          containerRef.current.innerHTML = '';
+          containerRef.current.appendChild(widget);
+          widgetRef.current = widget;
+        }
+
+        // Set up event listeners
+        const handleSolve = (event: CustomEvent) => {
+          console.log('Cap.js CAPTCHA solved:', event.detail);
+          if (event.detail && event.detail.token) {
+            console.log('Setting verification state - token:', event.detail.token);
+            verificationTokenRef.current = event.detail.token;
+            
+            // Force state updates
+            setIsVerified(true);
+            setVerificationToken(event.detail.token);
+            setError('');
+            
+            console.log('State updated - isVerified: true, token:', event.detail.token);
+            onVerify(event.detail.token);
+            
+            // Prevent automatic reset by stopping event propagation
+            event.stopPropagation();
+            event.preventDefault();
+          } else {
+            const errorMsg = 'CAPTCHA verification failed - no token received';
+            setError(errorMsg);
+            onError?.(errorMsg);
+          }
+        };
+
+        const handleError = (event: CustomEvent) => {
+          console.error('Cap.js CAPTCHA error:', event.detail);
+          const errorMsg = event.detail?.message || 'CAPTCHA error occurred';
+          setError(errorMsg);
+          setIsVerified(false);
+          setVerificationToken(null);
+          verificationTokenRef.current = null;
+          onError?.(errorMsg);
+        };
+
+        const handleReset = (event: CustomEvent) => {
+          console.log('Cap.js CAPTCHA reset event - checking verification status');
+          // Always prevent reset if we have a verification token
+          if (verificationTokenRef.current) {
+            console.log('Blocking reset - already verified with token:', verificationTokenRef.current);
+            event.stopPropagation();
+            event.preventDefault();
+            return;
+          }
+          
+          console.log('Allowing reset - not verified');
+          // Only allow reset if we're not verified
+          setError('');
+          setIsVerified(false);
+          setVerificationToken(null);
+        };
+
+        // Add event listeners
+        widget.addEventListener('solve', handleSolve as EventListener);
+        widget.addEventListener('error', handleError as EventListener);
+        widget.addEventListener('reset', handleReset as EventListener);
+        
+        eventListenersAttached.current = true;
+        isInitialized.current = true;
+
+        console.log('Cap.js widget initialized with ID:', widgetId.current);
+
+      } catch (err) {
+        console.error('Error initializing Cap.js widget:', err);
+        setError('Failed to initialize CAPTCHA widget');
+        onError?.('Failed to initialize CAPTCHA widget');
       }
     };
 
-    // Listen for the solve event
-    widget.addEventListener('solve', handleSolve);
+    // Small delay to ensure DOM is ready
+    setTimeout(initializeWidget, 50);
 
     return () => {
-      widget.removeEventListener('solve', handleSolve);
+      if (widgetRef.current && eventListenersAttached.current) {
+        try {
+          widgetRef.current.removeEventListener('solve', () => {});
+          widgetRef.current.removeEventListener('error', () => {});
+          widgetRef.current.removeEventListener('reset', () => {});
+        } catch (e) {
+          console.warn('Error removing event listeners:', e);
+        }
+        eventListenersAttached.current = false;
+      }
     };
-  }, [isLoaded, onVerify, onError]);
+  }, [isLoaded, apiEndpoint, theme, onVerify, onError]);
 
-  // For now, let's create a simple mock implementation since we need server endpoints
-  const [isVerified, setIsVerified] = useState(false);
-  const [isWorking, setIsWorking] = useState(false);
-
-  const handleMockVerification = async () => {
-    if (isVerified || isWorking) return;
+  const handleRetry = useCallback(() => {
+    setError('');
+    setIsVerified(false);
+    setVerificationToken(null);
+    isInitialized.current = false;
     
-    setIsWorking(true);
-    console.log('Starting mock CAPTCHA verification...');
-    
-    try {
-      // Simulate the Cap.js proof-of-work process
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Generate a mock token
-      const token = `cap_mock_${Date.now()}_${Math.random().toString(36).substring(2)}`;
-      console.log('Mock CAPTCHA completed, token:', token);
-      
-      setIsVerified(true);
-      setIsWorking(false);
-      onVerify(token);
-    } catch (error) {
-      console.error('Mock CAPTCHA error:', error);
-      setIsWorking(false);
-      onError?.('CAPTCHA verification failed');
+    // Reinitialize the widget
+    if (containerRef.current) {
+      containerRef.current.innerHTML = '';
     }
-  };
+  }, []);
 
-  return (
-    <div className={`captcha-container ${className}`}>
-      {/* For now, show a mock interface until we set up proper server endpoints */}
-      <div 
-        className="flex items-center space-x-3 p-4 border border-gray-300 rounded-lg bg-gray-50 cursor-pointer hover:bg-gray-100 transition-colors"
-        onClick={handleMockVerification}
-      >
-        <div className="relative">
-          <input
-            type="checkbox"
-            checked={isVerified}
-            readOnly
-            disabled={isWorking}
-            className="w-5 h-5 text-blue-600 bg-white border-2 border-gray-300 rounded focus:ring-blue-500 cursor-pointer disabled:cursor-not-allowed pointer-events-none"
-          />
-          {isWorking && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="animate-spin rounded-full h-3 w-3 border border-blue-600 border-t-transparent"></div>
+  if (error) {
+    return (
+      <div className={`p-4 border border-red-300 rounded-md bg-red-50 ${className}`}>
+        <div className="flex">
+          <div className="flex-shrink-0">
+            <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+            </svg>
+          </div>
+          <div className="ml-3 flex-1">
+            <h3 className="text-sm font-medium text-red-800">CAPTCHA Error</h3>
+            <div className="mt-2 text-sm text-red-700">
+              <p>{error}</p>
             </div>
-          )}
-        </div>
-        <div className="flex flex-col">
-          <span className="text-gray-700 font-medium text-sm">
-            {isVerified ? "Verified! ✓" : "I'm a human"}
-          </span>
-          {isWorking && (
-            <span className="text-xs text-gray-500">Computing proof-of-work...</span>
-          )}
+            <div className="mt-4">
+              <button
+                onClick={handleRetry}
+                className="bg-red-100 hover:bg-red-200 text-red-800 text-xs font-medium px-3 py-1 rounded-md transition-colors"
+              >
+                Retry
+              </button>
+            </div>
+          </div>
         </div>
       </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className={`flex justify-center items-center min-h-[120px] ${className}`}>
+        <div className="flex items-center space-x-2">
+          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+          <span className="text-sm text-gray-600">Loading CAPTCHA...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isLoaded) {
+    return (
+      <div className={`p-4 border border-gray-300 rounded-md bg-gray-50 ${className}`}>
+        <p className="text-sm text-gray-600">Failed to load CAPTCHA</p>
+        <button
+          onClick={handleRetry}
+          className="mt-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-medium px-3 py-1 rounded-md transition-colors"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`cap-captcha-container ${className}`}>
+      {/* Widget container - hide when verified */}
+      <div 
+        ref={containerRef} 
+        className={`cap-widget-wrapper ${isVerified ? 'hidden' : ''}`}
+      >
+        {/* Widget will be inserted here */}
+      </div>
       
-      {/* Hidden Cap.js widget for future use when server endpoints are ready */}
-      <div style={{ display: 'none' }}>
-        <cap-widget
-          ref={widgetRef}
-          data-cap-api-endpoint={apiEndpoint}
-          data-cap-hidden-field-name="cap-token"
-        />
+      {/* Show persistent verification status */}
+      {isVerified && verificationToken ? (
+        <div className="flex items-center justify-center p-4 bg-green-50 border border-green-200 rounded-md">
+          <div className="flex items-center text-green-700">
+            <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span className="font-medium">Verified Successfully</span>
+          </div>
+        </div>
+      ) : null}
+      
+      {/* Powered by Cap.js */}
+      <div className="text-center mt-2">
+        <p className="text-xs text-gray-500">
+          Protected by <span className="font-semibold">Cap.js</span>
+        </p>
       </div>
     </div>
   );

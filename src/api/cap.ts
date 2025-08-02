@@ -1,57 +1,113 @@
-import cap from '@/lib/cap-server';
+// Cap.js Standalone API integration
+// Based on Cap.js Standalone documentation: https://capjs.js.org/guide/standalone/
 
-// API endpoint handlers for Cap.js
-export async function createChallenge() {
-  try {
-    const challenge = await cap.createChallenge();
-    return {
-      success: true,
-      data: challenge
-    };
-  } catch (error) {
-    console.error('Error creating challenge:', error);
-    return {
-      success: false,
-      error: 'Failed to create challenge'
-    };
-  }
+export interface CapVerifyResponse {
+  success: boolean;
+  error?: string;
 }
 
-export async function redeemChallenge(token: string, solutions: any[]) {
+export interface CapVerifyRequest {
+  token: string;
+}
+
+/**
+ * Verify Cap.js CAPTCHA token with Cap Standalone server
+ * @param token - The CAPTCHA token from the Cap widget
+ * @returns Promise<CapVerifyResponse>
+ */
+export async function verifyCaptcha(token: string): Promise<CapVerifyResponse> {
   try {
-    if (!token || !solutions) {
+    // Get configuration from environment variables
+    const siteKey = import.meta.env.VITE_CAP_SITE_KEY || '27d391833c';
+    const serverUrl = import.meta.env.VITE_CAP_SERVER_URL || 'http://localhost:3000';
+    const secretKey = import.meta.env.VITE_CAP_SECRET_KEY || 'oiwsPwnSixUBIUY1HAgaxl919LMwjouO8MOeQE';
+
+    // Construct the verification endpoint according to Cap.js Standalone docs
+    const verifyUrl = `${serverUrl}/${siteKey}/siteverify`;
+
+    console.log('Verifying Cap.js token:', { verifyUrl, tokenLength: token.length });
+
+    // Make POST request to Cap Standalone server
+    const response = await fetch(verifyUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        secret: secretKey,
+        response: token
+      })
+    });
+
+    if (!response.ok) {
+      console.error('Cap.js verification request failed:', response.status, response.statusText);
       return {
         success: false,
-        error: 'Missing token or solutions'
+        error: `HTTP ${response.status}: ${response.statusText}`
       };
     }
-    
-    const result = await cap.redeemChallenge({ token, solutions });
+
+    const result = await response.json();
+    console.log('Cap.js verification result:', result);
+
     return {
-      success: true,
-      data: result
+      success: result.success === true,
+      error: result.success ? undefined : 'CAPTCHA verification failed'
     };
-  } catch (error) {
-    console.error('Error redeeming challenge:', error);
+
+  } catch (error: any) {
+    console.error('Cap.js verification error:', error);
     return {
       success: false,
-      error: 'Failed to redeem challenge'
+      error: error.message || 'Network error during CAPTCHA verification'
     };
   }
 }
 
-export async function validateToken(token: string, keepToken = false) {
+/**
+ * Client-side Cap.js verification API endpoint
+ * This is called by the contact form to verify CAPTCHA tokens
+ */
+export async function POST(request: Request): Promise<Response> {
   try {
-    const result = await cap.validateToken(token, { keepToken });
-    return {
-      success: true,
-      data: result
-    };
-  } catch (error) {
-    console.error('Error validating token:', error);
-    return {
-      success: false,
-      error: 'Failed to validate token'
-    };
+    const body: CapVerifyRequest = await request.json();
+    
+    if (!body.token) {
+      return new Response(
+        JSON.stringify({ success: false, error: 'CAPTCHA token is required' }),
+        { 
+          status: 400,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      );
+    }
+
+    const result = await verifyCaptcha(body.token);
+
+    return new Response(
+      JSON.stringify(result),
+      { 
+        status: result.success ? 200 : 400,
+        headers: { 'Content-Type': 'application/json' }
+      }
+    );
+
+  } catch (error: any) {
+    console.error('Cap.js API endpoint error:', error);
+    return new Response(
+      JSON.stringify({ 
+        success: false, 
+        error: error.message || 'Internal server error' 
+      }),
+      { 
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      }
+    );
   }
 }
+
+export default {
+  verifyCaptcha,
+  POST
+};

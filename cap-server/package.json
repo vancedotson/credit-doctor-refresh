@@ -1,0 +1,23 @@
+{
+  "name": "cap-server",
+  "version": "1.0.0",
+  "description": "Cap.js CAPTCHA server for Railway deployment",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "@cap.js/server": "^3.0.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "compression": "^1.7.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": ["captcha", "cap.js", "security"],
+  "license": "MIT"
+}
