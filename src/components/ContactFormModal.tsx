@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useIsMobile } from "@/hooks/use-mobile";
-import SimpleMathCaptcha, { SimpleMathCaptchaRef } from "@/components/ui/simple-math-captcha";
 
 // Form validation schema
 const contactFormSchema = z.object({
@@ -37,7 +36,6 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
     onClose();
   };
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
 
   const {
     register,
@@ -52,23 +50,16 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
   });
 
   const onFormSubmit = async (data: ContactFormData) => {
-    // Check if CAPTCHA is completed
-    if (!isCaptchaVerified) {
-      console.log('CAPTCHA not verified');
-      return;
-    }
-
     setSubmitStatus('submitting');
     try {
       // TODO: Replace with actual API endpoint
-      console.log('Form data:', { ...data, captchaVerified: isCaptchaVerified });
+      console.log('Form data:', data);
       
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       setSubmitStatus('success');
       reset();
-      setIsCaptchaVerified(false);
       setTimeout(() => {
         handleClose();
         setSubmitStatus('idle');
@@ -229,16 +220,6 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
               Sign up for newsletters and special promotions
             </span>
           </label>
-        </div>
-
-        {/* MATH CAPTCHA */}
-        <div>
-          <SimpleMathCaptcha
-            onVerify={(isVerified) => {
-              setIsCaptchaVerified(isVerified);
-            }}
-            className="w-full"
-          />
         </div>
 
         {/* Submit Button */}
