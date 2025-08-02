@@ -32,9 +32,19 @@ const GoogleRecaptcha = forwardRef<GoogleRecaptchaRef, GoogleRecaptchaProps>(
       onVerify(null);
     };
 
-    // You need to get this key from https://www.google.com/recaptcha/admin
-    // For development, you can use the test key: 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
-    const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
+    // Production reCAPTCHA site key from environment variables
+    const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+
+    if (!siteKey) {
+      console.error('VITE_RECAPTCHA_SITE_KEY environment variable is not set');
+      return (
+        <div className={`flex justify-center ${className}`}>
+          <div className="text-red-500 text-sm">
+            reCAPTCHA configuration error. Please contact support.
+          </div>
+        </div>
+      );
+    }
 
     return (
       <div className={`flex justify-center ${className}`}>
