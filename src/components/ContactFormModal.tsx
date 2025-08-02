@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useIsMobile } from "@/hooks/use-mobile";
+import GoogleRecaptcha, { GoogleRecaptchaRef } from "@/components/ui/google-recaptcha";
 
 // Form validation schema
 const contactFormSchema = z.object({
@@ -36,6 +37,7 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
     onClose();
   };
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
 
   const {
     register,
@@ -50,16 +52,23 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
   });
 
   const onFormSubmit = async (data: ContactFormData) => {
+    // Check if CAPTCHA is completed
+    if (!isCaptchaVerified) {
+      console.log('CAPTCHA not verified');
+      return;
+    }
+
     setSubmitStatus('submitting');
     try {
       // TODO: Replace with actual API endpoint
-      console.log('Form data:', data);
+      console.log('Form data:', { ...data, captchaVerified: isCaptchaVerified });
       
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       setSubmitStatus('success');
       reset();
+      setIsCaptchaVerified(false);
       setTimeout(() => {
         handleClose();
         setSubmitStatus('idle');
@@ -222,9 +231,14 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
           </label>
         </div>
 
-        {/* reCAPTCHA Placeholder */}
-        <div className="flex items-center justify-center p-4 bg-gray-50 rounded border-2 border-dashed border-gray-300">
-          <span className="text-gray-500 text-sm">reCAPTCHA verification will be added here</span>
+        {/* GOOGLE RECAPTCHA */}
+        <div>
+          <GoogleRecaptcha
+            onVerify={(token) => {
+              setIsCaptchaVerified(!!token);
+            }}
+            className="w-full"
+          />
         </div>
 
         {/* Submit Button */}
@@ -247,7 +261,7 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
       <Sheet open={isOpen} onOpenChange={handleClose}>
         <SheetContent 
           side="bottom" 
-          className="h-[95vh] w-full rounded-t-xl p-0 overflow-y-auto"
+          className="h-[95vh] w-full rounded-t-xl p-0 overflow-y-auto flex flex-col"
         >
           <SheetHeader className="p-6 border-b bg-white sticky top-0 z-10">
             <div className="flex justify-between items-center">
@@ -264,7 +278,7 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
               </button>
             </div>
           </SheetHeader>
-          <div className="p-6 pb-8">
+          <div className="p-6 pb-8 flex-1 overflow-y-auto">
             <FormContent />
           </div>
         </SheetContent>

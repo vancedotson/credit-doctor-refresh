@@ -192,7 +192,7 @@ function HeroGeometric({
                         initial="hidden"
                         animate="visible"
                     >
-                        <h1 className="text-6xl sm:text-7xl md:text-8xl font-bold mb-6 md:mb-8 tracking-tight leading-none sm:leading-tight">
+                        <h1 className="text-7xl sm:text-8xl md:text-9xl font-bold mb-6 md:mb-8 tracking-tight leading-none sm:leading-tight">
                             <span className="text-white drop-shadow-lg block">
                                 {title1}
                             </span>
