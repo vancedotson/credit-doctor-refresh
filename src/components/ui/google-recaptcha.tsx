@@ -32,11 +32,11 @@ const GoogleRecaptcha = forwardRef<GoogleRecaptchaRef, GoogleRecaptchaProps>(
       onVerify(null);
     };
 
-    // Production reCAPTCHA site key from environment variables
-    const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
+    // Production reCAPTCHA site key - using hardcoded production key
+    const siteKey = '6LfJvJcrAAAAAF_o2BBHfpXXw7sW0An87CYBRIJr';
     
     // Debug logging
-    console.log('reCAPTCHA siteKey:', siteKey);
+    console.log('reCAPTCHA siteKey (hardcoded production):', siteKey);
     console.log('Environment variable VITE_RECAPTCHA_SITE_KEY:', import.meta.env.VITE_RECAPTCHA_SITE_KEY);
 
     return (
