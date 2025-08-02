@@ -32,3 +32,4 @@ dist-ssr
 
 # Large video files
 src/assets/Vancetutorial.mp4
+public/Vancetutorial.mp4
