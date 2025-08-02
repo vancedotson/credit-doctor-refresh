@@ -20,7 +20,7 @@ const BookSession = () => {
     // Fix any potential overflow issues from previous pages
     document.body.style.overflow = 'unset';
     
-    // Track page view
+    // Track page view for analytics
     console.log('Page view: book_session');
   }, []);
 
