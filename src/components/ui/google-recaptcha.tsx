@@ -33,18 +33,11 @@ const GoogleRecaptcha = forwardRef<GoogleRecaptchaRef, GoogleRecaptchaProps>(
     };
 
     // Production reCAPTCHA site key from environment variables
-    const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
-
-    if (!siteKey) {
-      console.error('VITE_RECAPTCHA_SITE_KEY environment variable is not set');
-      return (
-        <div className={`flex justify-center ${className}`}>
-          <div className="text-red-500 text-sm">
-            reCAPTCHA configuration error. Please contact support.
-          </div>
-        </div>
-      );
-    }
+    const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
+    
+    // Debug logging
+    console.log('reCAPTCHA siteKey:', siteKey);
+    console.log('Environment variable VITE_RECAPTCHA_SITE_KEY:', import.meta.env.VITE_RECAPTCHA_SITE_KEY);
 
     return (
       <div className={`flex justify-center ${className}`}>
