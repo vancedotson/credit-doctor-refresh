@@ -66,7 +66,7 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
       <Sheet open={isOpen} onOpenChange={handleClose}>
         <SheetContent 
           side="bottom" 
-          className="h-[95vh] w-full rounded-t-xl p-0 overflow-hidden flex flex-col"
+          className="h-[95vh] w-full rounded-t-xl p-0 flex flex-col"
         >
           <SheetHeader className="p-6 border-b bg-white sticky top-0 z-10 flex-shrink-0">
             <div className="flex justify-between items-center">
@@ -83,7 +83,7 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
               </button>
             </div>
           </SheetHeader>
-          <div className="flex-1 overflow-hidden">
+          <div className="flex-1 overflow-y-auto overflow-x-hidden">
             <FormContent />
           </div>
         </SheetContent>
