@@ -33,7 +33,7 @@ const GoogleRecaptcha = forwardRef<GoogleRecaptchaRef, GoogleRecaptchaProps>(
     };
 
     // Production reCAPTCHA site key - using hardcoded production key
-    const siteKey = '6LfJvJcrAAAAAF_o2BBHfpXXw7sW0An87CYBRIJr';
+    const siteKey = '6LeKZJcrAAAAAF-XntvV3GwTnOe81lgmHS2pfbgY';
     
     // Debug logging
     console.log('reCAPTCHA siteKey (hardcoded production):', siteKey);
