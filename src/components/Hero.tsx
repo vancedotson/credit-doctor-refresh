@@ -61,7 +61,7 @@ const Hero = ({ showForm, openForm, closeForm }: HeroProps) => {
         <HeroGeometric
           badge="🏆 5-Star Credit Repair Service"
           title1="We Sue For"
-          title2="A Deletion"
+          title2="Our Deletions"
           description="Expert credit repair services that get results. We get deletions with our proven 4-step process and 99.9% success rate."
         >
         {/* Mobile Headshot - Show before buttons on mobile */}
