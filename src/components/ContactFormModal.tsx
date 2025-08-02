@@ -66,7 +66,7 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
       <Sheet open={isOpen} onOpenChange={handleClose}>
         <SheetContent 
           side="bottom" 
-          className="h-[95vh] w-full rounded-t-xl p-0 flex flex-col"
+          className="h-screen w-full rounded-t-xl p-0 flex flex-col"
         >
           <SheetHeader className="p-6 border-b bg-white sticky top-0 z-10 flex-shrink-0">
             <div className="flex justify-between items-center">
@@ -94,7 +94,7 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
   // Desktop: Use Dialog (centered modal with backdrop blur)
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="max-w-2xl w-full max-h-[95vh] overflow-hidden p-0 flex flex-col">
+      <DialogContent className="max-w-2xl w-full max-h-screen overflow-hidden p-0 flex flex-col">
         <DialogHeader className="p-6 border-b bg-white sticky top-0 z-10 flex-shrink-0">
           <div className="flex justify-between items-center">
             <div className="flex-1">
