@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useIsMobile } from "@/hooks/use-mobile";
-import GoogleRecaptcha, { GoogleRecaptchaRef } from "@/components/ui/google-recaptcha";
+import SimpleMathCaptcha, { SimpleMathCaptchaRef } from "@/components/ui/simple-math-captcha";
 
 // Form validation schema
 const contactFormSchema = z.object({
@@ -231,11 +231,11 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
           </label>
         </div>
 
-        {/* GOOGLE RECAPTCHA */}
+        {/* MATH CAPTCHA */}
         <div>
-          <GoogleRecaptcha
-            onVerify={(token) => {
-              setIsCaptchaVerified(!!token);
+          <SimpleMathCaptcha
+            onVerify={(isVerified) => {
+              setIsCaptchaVerified(isVerified);
             }}
             className="w-full"
           />

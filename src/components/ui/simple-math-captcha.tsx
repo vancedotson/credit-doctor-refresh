@@ -1,105 +1,115 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Input } from './input';
+import { Label } from './label';
 
 interface SimpleMathCaptchaProps {
   onVerify: (isVerified: boolean) => void;
   className?: string;
 }
 
-export const SimpleMathCaptcha = ({ onVerify, className = '' }: SimpleMathCaptchaProps) => {
-  const [num1, setNum1] = useState(0);
-  const [num2, setNum2] = useState(0);
-  const [userAnswer, setUserAnswer] = useState('');
-  const [isVerified, setIsVerified] = useState(false);
-  const [error, setError] = useState('');
+export interface SimpleMathCaptchaRef {
+  reset: () => void;
+  isVerified: () => boolean;
+}
 
-  // Generate new math problem
-  const generateProblem = () => {
-    const newNum1 = Math.floor(Math.random() * 10) + 1;
-    const newNum2 = Math.floor(Math.random() * 10) + 1;
-    setNum1(newNum1);
-    setNum2(newNum2);
-    setUserAnswer('');
-    setIsVerified(false);
-    setError('');
-    onVerify(false);
-  };
+const SimpleMathCaptcha = forwardRef<SimpleMathCaptchaRef, SimpleMathCaptchaProps>(
+  ({ onVerify, className = '' }, ref) => {
+    const [num1, setNum1] = useState(0);
+    const [num2, setNum2] = useState(0);
+    const [userAnswer, setUserAnswer] = useState('');
+    const [isVerified, setIsVerified] = useState(false);
+    const [showError, setShowError] = useState(false);
 
-  // Generate initial problem
-  useEffect(() => {
-    generateProblem();
-  }, []);
-
-  // Check answer whenever user input changes
-  useEffect(() => {
-    if (userAnswer === '') {
+    const generateNumbers = () => {
+      const n1 = Math.floor(Math.random() * 10) + 1;
+      const n2 = Math.floor(Math.random() * 10) + 1;
+      setNum1(n1);
+      setNum2(n2);
+      setUserAnswer('');
       setIsVerified(false);
-      setError('');
+      setShowError(false);
       onVerify(false);
-      return;
-    }
+    };
 
-    const correctAnswer = num1 + num2;
-    const userNum = parseInt(userAnswer);
+    useEffect(() => {
+      generateNumbers();
+    }, []);
 
-    if (isNaN(userNum)) {
-      setIsVerified(false);
-      setError('Please enter a valid number');
-      onVerify(false);
-    } else if (userNum === correctAnswer) {
-      setIsVerified(true);
-      setError('');
-      onVerify(true);
-    } else {
-      setIsVerified(false);
-      setError('Incorrect answer, please try again');
-      onVerify(false);
-    }
-  }, [userAnswer, num1, num2, onVerify]);
+    useImperativeHandle(ref, () => ({
+      reset: () => {
+        generateNumbers();
+      },
+      isVerified: () => isVerified
+    }));
 
-  return (
-    <div className={`space-y-3 ${className}`}>
-      <div className="flex items-center justify-between p-4 border rounded-lg bg-gray-50">
-        <div className="flex items-center space-x-3">
-          <span className="text-lg font-semibold">Security Check:</span>
-          <div className="flex items-center space-x-2 text-xl font-bold">
-            <span>{num1}</span>
-            <span>+</span>
-            <span>{num2}</span>
-            <span>=</span>
-            <Input
-              type="text"
-              value={userAnswer}
-              onChange={(e) => setUserAnswer(e.target.value)}
-              className="w-16 text-center"
-              placeholder="?"
-              maxLength={3}
-            />
+    const handleAnswerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const answer = e.target.value;
+      setUserAnswer(answer);
+      setShowError(false);
+
+      const correctAnswer = num1 + num2;
+      if (answer && parseInt(answer) === correctAnswer) {
+        setIsVerified(true);
+        onVerify(true);
+        console.log('Math captcha verified successfully');
+      } else {
+        setIsVerified(false);
+        onVerify(false);
+        if (answer && parseInt(answer) !== correctAnswer) {
+          setShowError(true);
+        }
+      }
+    };
+
+    return (
+      <div className={`space-y-3 ${className}`}>
+        <div className="flex items-center justify-center p-4 bg-gray-50 rounded-lg border">
+          <div className="text-center">
+            <Label htmlFor="captcha-answer" className="text-sm font-medium text-gray-700 mb-2 block">
+              Security Check: Solve this simple math problem
+            </Label>
+            <div className="flex items-center justify-center space-x-3 mb-3">
+              <span className="text-2xl font-bold text-blue-600">{num1}</span>
+              <span className="text-2xl font-bold text-gray-500">+</span>
+              <span className="text-2xl font-bold text-blue-600">{num2}</span>
+              <span className="text-2xl font-bold text-gray-500">=</span>
+              <Input
+                id="captcha-answer"
+                type="number"
+                value={userAnswer}
+                onChange={handleAnswerChange}
+                placeholder="?"
+                className="w-16 text-center text-xl font-bold"
+                maxLength={2}
+              />
+            </div>
+            {showError && (
+              <p className="text-red-500 text-sm">Incorrect answer. Please try again.</p>
+            )}
+            {isVerified && (
+              <div className="flex items-center justify-center space-x-2 text-green-600">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span className="text-sm font-medium">Verified!</span>
+              </div>
+            )}
           </div>
         </div>
-        <button
-          type="button"
-          onClick={generateProblem}
-          className="text-blue-600 hover:text-blue-800 text-sm underline"
-        >
-          New Problem
-        </button>
+        <div className="text-center">
+          <button
+            type="button"
+            onClick={generateNumbers}
+            className="text-sm text-blue-600 hover:text-blue-800 underline"
+          >
+            Get a new problem
+          </button>
+        </div>
       </div>
-      
-      {error && (
-        <p className="text-red-600 text-sm">{error}</p>
-      )}
-      
-      {isVerified && (
-        <p className="text-green-600 text-sm flex items-center">
-          <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-          </svg>
-          Verified! You're human.
-        </p>
-      )}
-    </div>
-  );
-};
+    );
+  }
+);
+
+SimpleMathCaptcha.displayName = 'SimpleMathCaptcha';
 
 export default SimpleMathCaptcha;
