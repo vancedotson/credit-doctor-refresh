@@ -145,13 +145,26 @@ export function HeroVideoDialog({
         className="relative cursor-pointer group"
         onClick={handleOpenModal}
       >
-        {/* Use thumbnail image since local video doesn't exist */}
-        <img
-          src={thumbnailSrc}
-          alt={thumbnailAlt}
-          width={1920}
-          height={1080}
+        {/* Autoplay muted video using local LFS asset */}
+        <video
+          ref={thumbnailVideoRef}
+          src="/Vancetutorial.mp4"
           className="w-full transition-all duration-200 group-hover:brightness-[0.8] ease-out rounded-md shadow-lg border"
+          autoPlay
+          muted
+          loop
+          playsInline
+          onError={() => {
+            // Fallback to thumbnail image if video fails to load
+            if (thumbnailVideoRef.current) {
+              thumbnailVideoRef.current.style.display = 'none';
+              const img = document.createElement('img');
+              img.src = thumbnailSrc;
+              img.alt = thumbnailAlt;
+              img.className = "w-full transition-all duration-200 group-hover:brightness-[0.8] ease-out rounded-md shadow-lg border";
+              thumbnailVideoRef.current.parentNode?.appendChild(img);
+            }
+          }}
         />
         <div className="absolute inset-0 flex flex-col group-hover:scale-100 scale-[0.9] transition-all duration-200 ease-out rounded-2xl">
           {/* Overlay Text - Moved Higher */}
