@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import SimpleHeader from "@/components/SimpleHeader";
 import Footer from "@/components/Footer";
@@ -31,41 +29,13 @@ const ThankYou = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black text-white">
       <SimpleHeader />
       
-      {/* Progress Indicator */}
-      <div className="w-full bg-gray-800/30 py-4 border-b border-gray-700">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-center space-x-4">
-            <div className="flex items-center">
-              <Badge variant="secondary" className="bg-green-500/20 text-green-400 border-green-500/30">
-                <CheckCircle2 className="w-4 h-4 mr-1" />
-                Step 1: Learn About Our Services
-              </Badge>
-            </div>
-            <Separator orientation="vertical" className="h-6 bg-green-500" />
-            <div className="flex items-center">
-              <Badge variant="secondary" className="bg-green-500/20 text-green-400 border-green-500/30">
-                <CheckCircle2 className="w-4 h-4 mr-1" />
-                Step 2: Book Your Free Analysis
-              </Badge>
-            </div>
-            <Separator orientation="vertical" className="h-6 bg-blue-500" />
-            <div className="flex items-center">
-              <Badge className="bg-blue-500 text-white">
-                <CheckCircle2 className="w-4 h-4 mr-1" />
-                Step 3: Get Your Results
-              </Badge>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <main className="container mx-auto px-4 py-12">
         {/* Confirmation Hero */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12"
+          className="text-center mb-12 mt-8"
         >
           <div className="mb-8">
             <motion.div
