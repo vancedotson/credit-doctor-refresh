@@ -178,12 +178,12 @@ export function HeroVideoDialog({
           
           {/* Play Button - Positioned in Center-Bottom Area */}
           <div className="flex justify-center mb-16">
-            <div className="bg-primary/10 flex items-center justify-center rounded-full backdrop-blur-md size-28">
+            <div className="bg-primary/10 flex items-center justify-center rounded-full backdrop-blur-md size-20 sm:size-28">
               <div
-                className={`flex items-center justify-center bg-gradient-to-b from-primary/30 to-primary shadow-md rounded-full size-20 transition-all ease-out duration-200 relative group-hover:scale-[1.2] scale-100`}
+                className={`flex items-center justify-center bg-gradient-to-b from-primary/30 to-primary shadow-md rounded-full size-14 sm:size-20 transition-all ease-out duration-200 relative group-hover:scale-[1.2] scale-100`}
               >
                 <Play
-                  className="size-8 text-white fill-white group-hover:scale-105 scale-100 transition-transform duration-200 ease-out"
+                  className="size-5 sm:size-8 text-white fill-white group-hover:scale-105 scale-100 transition-transform duration-200 ease-out"
                   style={{
                     filter:
                       "drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06))",
