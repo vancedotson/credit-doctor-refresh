@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { HeroVideoDialog } from "@/components/ui/hero-video-dialog";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-const VanceTutorialVideo = "/Vancetutorial.mp4";
+// Video hosted on Google Cloud Storage - solves Vercel file size deployment issues
+const VanceTutorialVideo = "https://storage.googleapis.com/msgsndr/4lo83zDKzLDOxLs4aFdb/media/688ea5db1c1165b549686f7a.mp4";
 import HeroImage from "@/assets/hero-vance.jpg";
 
 const BookSession = () => {
