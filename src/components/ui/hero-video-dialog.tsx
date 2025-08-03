@@ -145,26 +145,14 @@ export function HeroVideoDialog({
         className="relative cursor-pointer group"
         onClick={handleOpenModal}
       >
-        {/* Muted autoplay video as thumbnail */}
-        {videoSrc.includes('.mp4') || videoSrc.includes('.webm') || videoSrc.includes('.ogg') ? (
-          <video
-            ref={thumbnailVideoRef}
-            src={videoSrc}
-            className="w-full transition-all duration-200 group-hover:brightness-[0.8] ease-out rounded-md shadow-lg border"
-            autoPlay
-            muted
-            loop
-            playsInline
-          />
-        ) : (
-          <img
-            src={thumbnailSrc}
-            alt={thumbnailAlt}
-            width={1920}
-            height={1080}
-            className="w-full transition-all duration-200 group-hover:brightness-[0.8] ease-out rounded-md shadow-lg border"
-          />
-        )}
+        {/* Use thumbnail image for external URLs with CORS restrictions */}
+        <img
+          src={thumbnailSrc}
+          alt={thumbnailAlt}
+          width={1920}
+          height={1080}
+          className="w-full transition-all duration-200 group-hover:brightness-[0.8] ease-out rounded-md shadow-lg border"
+        />
         <div className="absolute inset-0 flex flex-col group-hover:scale-100 scale-[0.9] transition-all duration-200 ease-out rounded-2xl">
           {/* Overlay Text - Moved Higher */}
           <div 
