@@ -119,6 +119,10 @@ export function HeroVideoDialog({
 
   const handleOpenModal = () => {
     setIsVideoOpen(true)
+    // Pause background autoplay video when modal opens
+    if (thumbnailVideoRef.current) {
+      thumbnailVideoRef.current.pause()
+    }
   }
 
   const handleCloseModal = () => {
@@ -127,6 +131,10 @@ export function HeroVideoDialog({
     if (modalVideoRef.current) {
       modalVideoRef.current.currentTime = 0
       modalVideoRef.current.pause()
+    }
+    // Resume background autoplay video when modal closes
+    if (thumbnailVideoRef.current) {
+      thumbnailVideoRef.current.play()
     }
   }
 
