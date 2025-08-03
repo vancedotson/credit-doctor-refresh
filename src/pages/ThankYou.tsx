@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Header from "@/components/Header";
+import SimpleHeader from "@/components/SimpleHeader";
 import Footer from "@/components/Footer";
 
 const ThankYou = () => {
@@ -81,7 +81,7 @@ const ThankYou = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black text-white">
-      <Header openForm={openForm} />
+      <SimpleHeader />
       
       {/* Progress Indicator */}
       <div className="w-full bg-gray-800/30 py-4 border-b border-gray-700">

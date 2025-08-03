@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { HeroVideoDialog } from "@/components/ui/hero-video-dialog";
-import Header from "@/components/Header";
+import SimpleHeader from "@/components/SimpleHeader";
 import Footer from "@/components/Footer";
 // Use local compressed video file
 const VanceTutorialVideo = "/Vancetutorialcompress.mp4";
@@ -27,7 +27,7 @@ const BookSession = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black text-white">
-      <Header openForm={openForm} />
+      <SimpleHeader />
       
       <main className="container mx-auto px-4 pt-32">
         {/* Hero Section - Clean and Focused */}
