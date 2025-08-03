@@ -145,26 +145,11 @@ export function HeroVideoDialog({
         className="relative cursor-pointer group"
         onClick={handleOpenModal}
       >
-        {/* Autoplay muted compressed video */}
-        <video
-          ref={thumbnailVideoRef}
-          src="/Vancetutorialcompress.mp4"
+        {/* Use thumbnail image for preview since Git LFS files don't work on Vercel */}
+        <img
+          src={thumbnailSrc}
+          alt={thumbnailAlt}
           className="w-full transition-all duration-200 group-hover:brightness-[0.8] ease-out rounded-md shadow-lg border"
-          autoPlay
-          muted
-          loop
-          playsInline
-          onError={() => {
-            // Fallback to thumbnail image if video fails to load
-            if (thumbnailVideoRef.current) {
-              thumbnailVideoRef.current.style.display = 'none';
-              const img = document.createElement('img');
-              img.src = thumbnailSrc;
-              img.alt = thumbnailAlt;
-              img.className = "w-full transition-all duration-200 group-hover:brightness-[0.8] ease-out rounded-md shadow-lg border";
-              thumbnailVideoRef.current.parentNode?.appendChild(img);
-            }
-          }}
         />
         <div className="absolute inset-0 flex flex-col group-hover:scale-100 scale-[0.9] transition-all duration-200 ease-out rounded-2xl">
           {/* Overlay Text - Moved Higher */}
@@ -218,7 +203,7 @@ export function HeroVideoDialog({
               </motion.button>
               <div className="flex flex-col">
                 <div className="w-full border-2 border-white rounded-2xl overflow-hidden isolate z-[1] relative">
-                  {/* Use local compressed video file for consistent quality and proper sizing */}
+                  {/* Use local compressed video file */}
                   <video
                     ref={modalVideoRef}
                     src="/Vancetutorialcompress.mp4"
