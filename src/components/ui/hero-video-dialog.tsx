@@ -205,22 +205,13 @@ export function HeroVideoDialog({
               </motion.button>
               <div className="flex flex-col">
                 <div className="size-full border-2 border-white rounded-2xl overflow-hidden isolate z-[1] relative">
-                  {videoSrc.includes('.mp4') || videoSrc.includes('.webm') || videoSrc.includes('.ogg') ? (
-                    <video
-                      ref={modalVideoRef}
-                      src={videoSrc}
-                      className="size-full rounded-2xl"
-                      controls
-                      playsInline
-                    />
-                  ) : (
-                    <iframe
-                      src={videoSrc}
-                      className="size-full rounded-2xl"
-                      allowFullScreen
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    ></iframe>
-                  )}
+                  {/* Use iframe for external URLs to bypass CORS restrictions */}
+                  <iframe
+                    src={videoSrc}
+                    className="size-full rounded-2xl"
+                    allowFullScreen
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  ></iframe>
                 </div>
                 
                 {/* Book A Call Button with 40px margin */}
