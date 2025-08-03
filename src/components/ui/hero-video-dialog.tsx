@@ -207,7 +207,7 @@ export function HeroVideoDialog({
             <motion.div
               {...selectedAnimation}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="relative w-full max-w-4xl aspect-video mx-4 md:mx-0"
+              className="relative w-full max-w-4xl mx-4 md:mx-0"
               onClick={(e) => e.stopPropagation()}
             >
               <motion.button 
@@ -217,14 +217,16 @@ export function HeroVideoDialog({
                 <XIcon className="size-5" />
               </motion.button>
               <div className="flex flex-col">
-                <div className="size-full border-2 border-white rounded-2xl overflow-hidden isolate z-[1] relative">
-                  {/* Use iframe for external URLs to bypass CORS restrictions */}
-                  <iframe
-                    src={videoSrc}
-                    className="size-full rounded-2xl"
-                    allowFullScreen
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  ></iframe>
+                <div className="w-full border-2 border-white rounded-2xl overflow-hidden isolate z-[1] relative">
+                  {/* Use local compressed video file for consistent quality and proper sizing */}
+                  <video
+                    ref={modalVideoRef}
+                    src="/Vancetutorialcompress.mp4"
+                    className="w-full h-auto rounded-2xl"
+                    controls
+                    playsInline
+                    preload="metadata"
+                  />
                 </div>
                 
                 {/* Book A Call Button with 40px margin */}
