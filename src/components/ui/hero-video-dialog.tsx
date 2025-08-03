@@ -145,11 +145,17 @@ export function HeroVideoDialog({
         className="relative cursor-pointer group"
         onClick={handleOpenModal}
       >
-        {/* Use thumbnail image for preview since Git LFS files don't work on Vercel */}
-        <img
-          src={thumbnailSrc}
-          alt={thumbnailAlt}
+        {/* Autoplay muted video as thumbnail - this is standard for web autoplay */}
+        <video
+          ref={thumbnailVideoRef}
+          src="/Vancetutorialcompress.mp4"
           className="w-full transition-all duration-200 group-hover:brightness-[0.8] ease-out rounded-md shadow-lg border"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={thumbnailSrc}
         />
         <div className="absolute inset-0 flex flex-col group-hover:scale-100 scale-[0.9] transition-all duration-200 ease-out rounded-2xl">
           {/* Overlay Text - Moved Higher */}
