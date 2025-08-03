@@ -145,10 +145,10 @@ export function HeroVideoDialog({
         className="relative cursor-pointer group"
         onClick={handleOpenModal}
       >
-        {/* Autoplay muted video using local LFS asset */}
+        {/* Autoplay muted compressed video */}
         <video
           ref={thumbnailVideoRef}
-          src="/Vancetutorial.mp4"
+          src="/Vancetutorialcompress.mp4"
           className="w-full transition-all duration-200 group-hover:brightness-[0.8] ease-out rounded-md shadow-lg border"
           autoPlay
           muted
