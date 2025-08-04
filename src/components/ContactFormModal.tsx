@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect } from "react";
 import { X } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -11,47 +11,10 @@ interface ContactFormModalProps {
 
 const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
   const isMobile = useIsMobile();
-  const [availableHeight, setAvailableHeight] = useState<number>(643);
-  const headerRef = useRef<HTMLDivElement>(null);
 
   const handleClose = () => {
     onClose();
   };
-
-  // Calculate available height for mobile
-  const calculateAvailableHeight = () => {
-    if (!isMobile || !headerRef.current) return;
-    
-    const viewportHeight = window.innerHeight;
-    const headerHeight = headerRef.current.offsetHeight;
-    const safePadding = 20; // Account for safe areas and padding
-    
-    const calculatedHeight = Math.max(
-      viewportHeight - headerHeight - safePadding,
-      400 // Minimum height to ensure form is usable
-    );
-    
-    setAvailableHeight(calculatedHeight);
-  };
-
-  // Update height when modal opens or window resizes
-  useEffect(() => {
-    if (!isOpen || !isMobile) return;
-
-    const updateHeight = () => {
-      // Small delay to ensure DOM is ready
-      setTimeout(calculateAvailableHeight, 100);
-    };
-
-    updateHeight();
-    window.addEventListener('resize', updateHeight);
-    window.addEventListener('orientationchange', updateHeight);
-
-    return () => {
-      window.removeEventListener('resize', updateHeight);
-      window.removeEventListener('orientationchange', updateHeight);
-    };
-  }, [isOpen, isMobile]);
 
   // Load the LeadConnector form embed script
   useEffect(() => {
@@ -70,23 +33,14 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
 
   // Form content component
   const FormContent = () => {
-    const dynamicHeight = isMobile ? availableHeight : 643;
-    
     return (
-      <div 
-        className="w-full h-full"
-        style={{ 
-          minHeight: `${dynamicHeight}px`,
-          maxHeight: isMobile ? `${availableHeight}px` : 'none'
-        }}
-      >
+      <div className="w-full h-full">
         <iframe
           src="https://api.leadconnectorhq.com/widget/form/kPIRCwjYHeZuE3cdyjuk"
           style={{
             width: '100%',
-            height: '100%',
-            minHeight: `${dynamicHeight}px`,
-            maxHeight: isMobile ? `${availableHeight}px` : 'none',
+            height: isMobile ? '800px' : '643px',
+            minHeight: isMobile ? '800px' : '643px',
             border: 'none',
             borderRadius: '3px'
           }}
@@ -99,7 +53,7 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
           data-deactivation-type="neverDeactivate"
           data-deactivation-value=""
           data-form-name="Form 99"
-          data-height={dynamicHeight.toString()}
+          data-height={isMobile ? "800" : "643"}
           data-layout-iframe-id="inline-kPIRCwjYHeZuE3cdyjuk"
           data-form-id="kPIRCwjYHeZuE3cdyjuk"
           title="Form 99"
@@ -109,16 +63,16 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
   };
 
   if (isMobile) {
-    // Mobile: Use Sheet (bottom drawer)
+    // Mobile: Use Sheet with viewport-based height
     return (
       <Sheet open={isOpen} onOpenChange={handleClose}>
         <SheetContent 
           side="bottom" 
-          className="h-screen w-full rounded-t-xl p-0 flex flex-col"
+          className="h-[100dvh] w-full rounded-t-xl p-0 flex flex-col"
         >
-          <div ref={headerRef} className="sticky top-0 z-10 flex-shrink-0">
-            <SheetHeader className="p-6 border-b bg-white">
-              <div className="flex justify-between items-center">
+          <div className="sticky top-0 z-10 flex-shrink-0 h-20">
+            <SheetHeader className="h-full flex justify-center items-center p-6 border-b bg-white">
+              <div className="flex justify-between items-center w-full">
                 <div className="flex-1">
                   <SheetTitle className="text-xl font-bold text-gray-900 text-center">
                     RECEIVE YOUR <span className="text-blue-600">FREE CREDIT</span> ANALYSIS
@@ -133,7 +87,7 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
               </div>
             </SheetHeader>
           </div>
-          <div className="flex-1 overflow-y-auto overflow-x-hidden">
+          <div className="h-[calc(100dvh-5rem)] overflow-y-auto overflow-x-hidden">
             <FormContent />
           </div>
         </SheetContent>
