@@ -35,7 +35,7 @@ const ThankYou = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12 mt-16"
+          className="text-center mb-12 mt-16 md:mt-24"
         >
           <div className="mb-8">
             <motion.div
