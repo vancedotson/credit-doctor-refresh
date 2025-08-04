@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { X } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -11,10 +11,47 @@ interface ContactFormModalProps {
 
 const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
   const isMobile = useIsMobile();
+  const [availableHeight, setAvailableHeight] = useState<number>(643);
+  const headerRef = useRef<HTMLDivElement>(null);
 
   const handleClose = () => {
     onClose();
   };
+
+  // Calculate available height for mobile
+  const calculateAvailableHeight = () => {
+    if (!isMobile || !headerRef.current) return;
+    
+    const viewportHeight = window.innerHeight;
+    const headerHeight = headerRef.current.offsetHeight;
+    const safePadding = 20; // Account for safe areas and padding
+    
+    const calculatedHeight = Math.max(
+      viewportHeight - headerHeight - safePadding,
+      400 // Minimum height to ensure form is usable
+    );
+    
+    setAvailableHeight(calculatedHeight);
+  };
+
+  // Update height when modal opens or window resizes
+  useEffect(() => {
+    if (!isOpen || !isMobile) return;
+
+    const updateHeight = () => {
+      // Small delay to ensure DOM is ready
+      setTimeout(calculateAvailableHeight, 100);
+    };
+
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+    window.addEventListener('orientationchange', updateHeight);
+
+    return () => {
+      window.removeEventListener('resize', updateHeight);
+      window.removeEventListener('orientationchange', updateHeight);
+    };
+  }, [isOpen, isMobile]);
 
   // Load the LeadConnector form embed script
   useEffect(() => {
@@ -32,33 +69,44 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
   }, [isOpen]);
 
   // Form content component
-  const FormContent = () => (
-    <div className="w-full h-full min-h-[643px]">
-      <iframe
-        src="https://api.leadconnectorhq.com/widget/form/kPIRCwjYHeZuE3cdyjuk"
-        style={{
-          width: '100%',
-          height: '100%',
-          minHeight: '643px',
-          border: 'none',
-          borderRadius: '3px'
+  const FormContent = () => {
+    const dynamicHeight = isMobile ? availableHeight : 643;
+    
+    return (
+      <div 
+        className="w-full h-full"
+        style={{ 
+          minHeight: `${dynamicHeight}px`,
+          maxHeight: isMobile ? `${availableHeight}px` : 'none'
         }}
-        id="inline-kPIRCwjYHeZuE3cdyjuk"
-        data-layout="{'id':'INLINE'}"
-        data-trigger-type="alwaysShow"
-        data-trigger-value=""
-        data-activation-type="alwaysActivated"
-        data-activation-value=""
-        data-deactivation-type="neverDeactivate"
-        data-deactivation-value=""
-        data-form-name="Form 99"
-        data-height="643"
-        data-layout-iframe-id="inline-kPIRCwjYHeZuE3cdyjuk"
-        data-form-id="kPIRCwjYHeZuE3cdyjuk"
-        title="Form 99"
-      />
-    </div>
-  );
+      >
+        <iframe
+          src="https://api.leadconnectorhq.com/widget/form/kPIRCwjYHeZuE3cdyjuk"
+          style={{
+            width: '100%',
+            height: '100%',
+            minHeight: `${dynamicHeight}px`,
+            maxHeight: isMobile ? `${availableHeight}px` : 'none',
+            border: 'none',
+            borderRadius: '3px'
+          }}
+          id="inline-kPIRCwjYHeZuE3cdyjuk"
+          data-layout="{'id':'INLINE'}"
+          data-trigger-type="alwaysShow"
+          data-trigger-value=""
+          data-activation-type="alwaysActivated"
+          data-activation-value=""
+          data-deactivation-type="neverDeactivate"
+          data-deactivation-value=""
+          data-form-name="Form 99"
+          data-height={dynamicHeight.toString()}
+          data-layout-iframe-id="inline-kPIRCwjYHeZuE3cdyjuk"
+          data-form-id="kPIRCwjYHeZuE3cdyjuk"
+          title="Form 99"
+        />
+      </div>
+    );
+  };
 
   if (isMobile) {
     // Mobile: Use Sheet (bottom drawer)
@@ -68,21 +116,23 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
           side="bottom" 
           className="h-screen w-full rounded-t-xl p-0 flex flex-col"
         >
-          <SheetHeader className="p-6 border-b bg-white sticky top-0 z-10 flex-shrink-0">
-            <div className="flex justify-between items-center">
-              <div className="flex-1">
-                <SheetTitle className="text-xl font-bold text-gray-900 text-center">
-                  RECEIVE YOUR <span className="text-blue-600">FREE CREDIT</span> ANALYSIS
-                </SheetTitle>
+          <div ref={headerRef} className="sticky top-0 z-10 flex-shrink-0">
+            <SheetHeader className="p-6 border-b bg-white">
+              <div className="flex justify-between items-center">
+                <div className="flex-1">
+                  <SheetTitle className="text-xl font-bold text-gray-900 text-center">
+                    RECEIVE YOUR <span className="text-blue-600">FREE CREDIT</span> ANALYSIS
+                  </SheetTitle>
+                </div>
+                <button
+                  onClick={handleClose}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
               </div>
-              <button
-                onClick={handleClose}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-          </SheetHeader>
+            </SheetHeader>
+          </div>
           <div className="flex-1 overflow-y-auto overflow-x-hidden">
             <FormContent />
           </div>
