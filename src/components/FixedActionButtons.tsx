@@ -1,4 +1,4 @@
-import { Phone, MessageCircle } from "lucide-react";
+import { Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface FixedActionButtonsProps {
@@ -32,15 +32,6 @@ const FixedActionButtons = ({ onFormOpen }: FixedActionButtonsProps) => {
           <Phone className="w-5 h-5" />
         </Button>
 
-        {/* Message Icon Button */}
-        <Button
-          onClick={onFormOpen}
-          variant="outline"
-          size="sm"
-          className="p-3 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
-        >
-          <MessageCircle className="w-5 h-5" />
-        </Button>
       </div>
     </div>
   );
