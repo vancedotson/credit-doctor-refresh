@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 import { HeroVideoDialog } from "@/components/ui/hero-video-dialog";
 import SimpleHeader from "@/components/SimpleHeader";
 import Footer from "@/components/Footer";
-// Use local compressed video file
-const VanceTutorialVideo = "/Vancetutorialcompress.mp4";
+// Use local video file
+const VanceTutorialVideo = "/tutorial video for website .mp4";
 import HeroImage from "@/assets/hero-vance.jpg";
 
 const BookSession = () => {
