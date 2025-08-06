@@ -68,3 +68,4 @@ You can deploy this project using any modern hosting platform such as:
 - AWS Amplify
 
 Simply build the project with `npm run build` and deploy the `dist` folder.
+# Trigger deployment Wed Aug  6 18:25:13 EDT 2025
