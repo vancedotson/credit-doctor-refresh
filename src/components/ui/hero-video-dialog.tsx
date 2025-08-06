@@ -156,7 +156,7 @@ export function HeroVideoDialog({
         {/* Autoplay muted video as thumbnail - this is standard for web autoplay */}
         <video
           ref={thumbnailVideoRef}
-          src="/Vancetutorialcompress.mp4"
+          src={videoSrc}
           className="w-full transition-all duration-200 group-hover:brightness-[0.8] ease-out rounded-md shadow-lg border"
           autoPlay
           muted
@@ -220,7 +220,7 @@ export function HeroVideoDialog({
                   {/* Use local compressed video file */}
                   <video
                     ref={modalVideoRef}
-                    src="/Vancetutorialcompress.mp4"
+                    src={videoSrc}
                     className="w-full h-auto rounded-2xl"
                     controls
                     playsInline
