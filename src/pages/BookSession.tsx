@@ -4,7 +4,7 @@ import { HeroVideoDialog } from "@/components/ui/hero-video-dialog";
 import SimpleHeader from "@/components/SimpleHeader";
 import Footer from "@/components/Footer";
 // Use local video file
-const VanceTutorialVideo = "/tutorial-video-for-website.mp4";
+const VanceTutorialVideo = "/tutorialvideoforwebsite.mp4";
 import HeroImage from "@/assets/hero-vance.jpg";
 
 const BookSession = () => {
