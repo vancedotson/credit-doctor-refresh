@@ -37,7 +37,7 @@ const Application = () => {
       
       {/* Main content area - takes up remaining space between header and footer */}
       <main className="flex-1 container mx-auto px-4 pt-32 pb-8">
-        <div className="w-full max-w-[60%] mx-auto h-full min-h-[calc(100vh-12rem)]">
+        <div className="w-full max-w-[80%] md:max-w-[60%] mx-auto h-full min-h-[calc(100vh-12rem)]">
           <iframe
             src="https://api.leadconnectorhq.com/widget/form/V0f4zk5xngMqx9gOQ7hl"
             style={{
