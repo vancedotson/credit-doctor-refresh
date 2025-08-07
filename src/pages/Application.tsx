@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import SimpleHeader from "@/components/SimpleHeader";
 import Footer from "@/components/Footer";
 
 const Application = () => {
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+
   // Placeholder function for Footer prop
   const openForm = () => {
     // Since this page is already the application form, we could scroll to top
@@ -16,17 +18,25 @@ const Application = () => {
     // Track page view for analytics
     console.log('Page view: application');
 
-    // Load the required script for the form
-    const script = document.createElement('script');
-    script.src = 'https://link.msgsndr.com/js/form_embed.js';
-    script.async = true;
-    document.head.appendChild(script);
+    // Check if script is already loaded
+    const existingScript = document.querySelector('script[src="https://link.msgsndr.com/js/form_embed.js"]');
+    
+    if (!existingScript) {
+      // Load the required script for the form
+      const script = document.createElement('script');
+      script.src = 'https://link.msgsndr.com/js/form_embed.js';
+      script.async = false; // Load synchronously to reduce flashing
+      script.onload = () => setScriptLoaded(true);
+      document.head.appendChild(script);
+    } else {
+      setScriptLoaded(true);
+    }
 
     // Cleanup script on unmount
     return () => {
-      const existingScript = document.querySelector('script[src="https://link.msgsndr.com/js/form_embed.js"]');
-      if (existingScript && existingScript.parentNode) {
-        existingScript.parentNode.removeChild(existingScript);
+      const scriptToRemove = document.querySelector('script[src="https://link.msgsndr.com/js/form_embed.js"]');
+      if (scriptToRemove && scriptToRemove.parentNode) {
+        scriptToRemove.parentNode.removeChild(scriptToRemove);
       }
     };
   }, []);
@@ -37,7 +47,7 @@ const Application = () => {
       
       {/* Main content area - takes up remaining space between header and footer */}
       <main className="flex-1 container mx-auto px-4 pt-32 pb-8">
-        <div className="w-full max-w-[80%] md:max-w-[60%] mx-auto h-full min-h-[calc(100vh-12rem)]">
+        <div className="w-full max-w-[100%] md:max-w-[60%] mx-auto h-full min-h-[calc(100vh-12rem)]">
           <iframe
             src="https://api.leadconnectorhq.com/widget/form/V0f4zk5xngMqx9gOQ7hl"
             style={{
